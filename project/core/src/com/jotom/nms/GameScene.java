@@ -26,6 +26,7 @@ public class GameScene extends Scene {
 		
 		Map.loadMap(1, this);
 		
+		getCamera().translate(10 * 32, (float) (7.5 * 32));
 		
 		
 		/*music = Gdx.audio.newMusic(Gdx.files.internal("music/song-intro.mp3"));
