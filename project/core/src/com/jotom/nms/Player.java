@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 public class Player extends GameObject {
@@ -154,6 +155,22 @@ public class Player extends GameObject {
 	
 	public void shoot() {
 		getScene().addObject(new Projectile(new Vector2(getPosition().cpy().x + getSize().x/2, getPosition().cpy().y + getSize().y/2), new Vector2(8, 8), new Animation(new Sprite(AssetManager.getTexture("bullet"))), shootAngle, 8, tag));
+	}
+	
+	public void draw(SpriteBatch batch) {
+		if(health > 0) {
+			int length = 32*5;
+			for(int i = 0; i < length; i++) {
+				Animation a = new Animation(new Sprite(AssetManager.getTexture("plot")));
+				a.setSize(1, 1);
+				float t = (float)i;
+				a.setColor((tag == 0) ? 1 : 0, 0, (tag == 1) ? 1 : 0, 1- (t/((float)length)));
+				a.setPosition(getPosition().cpy().x + ((float)Math.cos(shootAngle)*i) + getSize().x/2, getPosition().cpy().y+ ((float)Math.sin(shootAngle)*i) + getSize().y/2);
+			
+				a.draw(batch);
+			}
+		}
+		super.draw(batch);
 	}
 	
 	public void reset() {
