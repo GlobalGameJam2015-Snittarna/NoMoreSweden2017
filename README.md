@@ -13,3 +13,17 @@ Game for no more sweden 2017
 - Spelarna börjar med slumpmässiga vapen varje runda. Pickadola, bösa, bazooka osv. (Kanske)
 - Top-down perspektiv
 
+## Todo
+
+### Tom
+- Player
+- Juice
+- Projektiler
+- Animation
+- Skit grafik
+
+### Carl(ruben, gustav)
+- Levels
+- Juice
+- Sounds
+- Vapen
