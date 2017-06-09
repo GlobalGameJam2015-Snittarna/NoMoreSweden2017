@@ -38,7 +38,7 @@ public class Camera extends OrthographicCamera {
 			//float dy = position.y - follow.getPosition().y;
 			if (Math.abs(dx) > deadZoneX) {
 				position.x = MathUtils.lerp(position.x, dx - deadZoneX * Math.signum(dx), .1f);
-				System.out.println(dx - deadZoneX * Math.signum(dx) - position.x);
+				//System.out.println(dx - deadZoneX * Math.signum(dx) - position.x);
 			}
 		}
 		

@@ -11,7 +11,7 @@ public class TestObject extends GameObject {
 	}
 
 	public void update() {
-		System.out.println(this.getSize());
-		System.out.println(this.getSprite().getX());
+		//System.out.println(this.getSize());
+		//System.out.println(this.getSprite().getX());
 	}
 }

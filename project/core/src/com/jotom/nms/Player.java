@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Player extends GameObject {
 	private final float ORGINAL_SPEED = 50;
+	private final float MAX_ANIMATION_COUNT = 0.2f;
 	
 	private final int START_HEALTH = 1;
 	
@@ -32,6 +33,10 @@ public class Player extends GameObject {
 	private int shootDelay;
 	private int maxShootDelay;
 	private int tag;
+	
+	private int currentFrame;
+	
+	private float animationCount;
 	
 	private float speed;
 	private float shootAngle;
@@ -100,14 +105,19 @@ public class Player extends GameObject {
 			
 			if(Gdx.input.isKeyPressed(upKey)) {
 				movmentDirection = new Vector2(((float)Math.cos(shootAngle)*speed)*dt, ((float)Math.sin(shootAngle)*speed)*dt);
+				animationCount += 1*dt;
 			}
 			
 			if(Gdx.input.isKeyPressed(downKey)) {
-				movmentDirection = new Vector2(((float)Math.cos(shootAngle)*speed)*dt, ((float)Math.sin(shootAngle)*speed)*dt);
+				movmentDirection = new Vector2(((float)Math.cos(shootAngle)*-speed)*dt, ((float)Math.sin(shootAngle)*-speed)*dt);
+				animationCount += 1*dt;
 			}
 			
 			if(!Gdx.input.isKeyPressed(downKey) && !Gdx.input.isKeyPressed(upKey)) {
 				movmentDirection = Vector2.Zero;
+				currentFrame = 0;
+				setSprite(new Animation(new Sprite(AssetManager.getTexture("player" + (tag+1) + "step" + currentFrame))));
+				setRotation(shootAngle*57.2957795f);
 			}
 			
 			if(shootDelay > 0) 
@@ -125,7 +135,6 @@ public class Player extends GameObject {
 			}
 			
 			setPosition(getPosition().add(movmentDirection.cpy()));
-			System.out.println(movmentDirection.toString() + " LOOOOL ");
 			moveDirections.add(movmentDirection.cpy());
 			currentMoveIndex += 1;
 			shootAngels.add(new Float(shootAngle));
@@ -133,19 +142,36 @@ public class Player extends GameObject {
 		
 		if(!isCurrentPlayer) {
 			if(!cantDoNextMove && currentMoveIndex != moveDirections.size()-1 && health > 0) {
-				doMove(currentMoveIndex);
+				doMove(currentMoveIndex, dt);
 				currentMoveIndex++;
 			}
+		}
+		
+		if(animationCount >= MAX_ANIMATION_COUNT && health > 0) {
+			if(currentFrame == 4) currentFrame = 0;
+			String n = "player" + (tag+1) + "step" + currentFrame;
+			setSprite(new Animation(new Sprite(AssetManager.getTexture(n))));
+			setRotation(shootAngle*57.2957795f);
+			currentFrame++;
+			animationCount = 0;
 		}
 		
 		super.update(dt);
 	}
 	
-	public void doMove(int index) {
+	public void doMove(int index, float dt) {
 		if(currentMoveIndex != moveDirections.size()-1) {
 			shootAngle = shootAngels.get(currentMoveIndex);
 			
 			setPosition(getPosition().add(moveDirections.get(currentMoveIndex).cpy()));
+			
+			if(moveDirections.get(currentMoveIndex).equals(Vector2.Zero)) {
+				currentFrame = 0;
+				setSprite(new Animation(new Sprite(AssetManager.getTexture("player" + (tag+1) + "step" + currentFrame))));
+				setRotation(shootAngle*57.2957795f);
+			} else {
+				animationCount += 1*dt;
+			}
 		
 			if(moves.get(currentMoveIndex) == Move.SHOOT) {
 				shoot();

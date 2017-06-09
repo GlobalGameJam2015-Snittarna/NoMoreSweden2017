@@ -60,7 +60,7 @@ public class Game extends ApplicationAdapter {
 		if(Gdx.input.isKeyPressed(Keys.ESCAPE)) Gdx.app.exit();
 		
 		Vector3 mouse = currentScene.getCamera().unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
-		System.out.println(mouse);
+		//System.out.println(mouse);
 		
 		currentScene.update(Gdx.graphics.getDeltaTime());
 		

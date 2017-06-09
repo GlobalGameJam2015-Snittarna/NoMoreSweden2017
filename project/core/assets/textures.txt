@@ -6,3 +6,13 @@ dead1,100,100,32,32
 dead2,133,100,32,32
 bullet,1,100,8,8
 plot,0,0,1,1
+player1step0,1,34,32,32
+player1step1,34,34,32,32
+player1step2,67,34,32,32
+player1step3,100,34,32,32
+player1step4,133,34,32,32
+player2step0,1,67,32,32
+player2step1,34,67,32,32
+player2step2,67,67,32,32
+player2step3,100,67,32,32
+player2step4,133,67,32,32
