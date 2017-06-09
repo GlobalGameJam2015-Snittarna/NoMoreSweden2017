@@ -23,6 +23,10 @@ public class GameScene extends Scene {
 		
 		random = new Random();
 		
+		Map.loadMap(1, this);
+		
+		
+		
 		/*music = Gdx.audio.newMusic(Gdx.files.internal("music/song-intro.mp3"));
 		music.setOnCompletionListener(new OnCompletionListener() {
 			
@@ -45,6 +49,8 @@ public class GameScene extends Scene {
 		}*/
 	}
 	
+	
+	
 	public void update(float dt) {
 		super.update(dt);
 	}
@@ -55,6 +61,7 @@ public class GameScene extends Scene {
 	}
 	
 	public void drawGame(SpriteBatch batch) {
-		
+		AssetManager.font.draw(batch, "origin", 0, 0);
+		super.drawGame(batch);
 	}
 }

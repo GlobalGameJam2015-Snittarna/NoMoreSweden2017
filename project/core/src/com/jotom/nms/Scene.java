@@ -50,7 +50,7 @@ public abstract class Scene {
 		toAdd = new ArrayList<GameObject>();
 		toRemove = new ArrayList<GameObject>();
 		objects = new ArrayList<GameObject>();
-		camera = new Camera(330, 180);
+		camera = new Camera(32 * 20, 32 * 15);
 	}
 	
 	/**
