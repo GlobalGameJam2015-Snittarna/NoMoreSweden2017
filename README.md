@@ -20,7 +20,7 @@ Game for no more sweden 2017
 - Juice
 - Projektiler
 - Animation
-- Skit grafik
+- Skitgrafik
 
 ### Carl(ruben, gustav)
 - Levels
