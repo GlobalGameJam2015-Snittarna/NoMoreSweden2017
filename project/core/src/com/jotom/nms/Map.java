@@ -9,9 +9,10 @@ public class Map {
 	private final static int TILESIZE = 32;
 	
 	private static TileType[] tileTypes = new TileType[] {
-		new TileType('x', AssetManager.getTexture("indestructible-tile"), false),
-		new TileType('d', AssetManager.getTexture("destructible-tile"), false),
-		
+		new TileType('x', AssetManager.getTexture("indestructible-tile"), false, false),
+		new TileType('d', AssetManager.getTexture("destructible-tile"), true, false),
+		new TileType('s', AssetManager.getTexture("indestructible-tile"), false, true),
+		new TileType('S', AssetManager.getTexture("indestructible-tile"), false, true)		
 	};
 	
 	private static TileType findTileType(char marker) {
@@ -22,6 +23,13 @@ public class Map {
 		return null;
 	}
 	
+	/** 
+	 * loads tile locations and adds the tiles to a scene
+	 * @param map
+	 * which map to load. located in assets/maps
+	 * @param scene
+	 * which scene to add the tiles to
+	 */
 	public static void loadMap(int map, Scene scene) {
 		String file = Gdx.files.internal("maps/" + map + ".map").readString();
 		
