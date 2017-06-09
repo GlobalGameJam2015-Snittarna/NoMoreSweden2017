@@ -15,13 +15,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 public class GameScene extends Scene {
-		
+	private final int MAX_SCORE = 10;
+
 	public static boolean gameOver;
 	
 	private Random random;
 	
 	// (e du) god (eller) praxis
 	private int[] scores;
+	private int winningPlayer;
 	
 	public GameScene() {
 		random = new Random();
@@ -67,14 +69,21 @@ public class GameScene extends Scene {
 			this.addObject(new BloodSplatter(new Vector2(102, 164)));
 		}
 		
+		for(int i = 0; i < scores.length; i++) {
+			if(scores[i] >= MAX_SCORE) {
+				gameOver = true;
+				winningPlayer = i;
+			}
+		}
+		
 		super.update(dt);
 	}
 	
 	public void drawUi(SpriteBatch uiBatch) {
-		if(gameOver) AssetManager.font.draw(uiBatch, "GAME OVER", 0, 0);
+		if(gameOver) AssetManager.font.draw(uiBatch, "GAME OVER \nPlayer " + (winningPlayer+1) + " won!", 0, 0);
 		
 		for(int i = 0; i < scores.length; i++)
-		AssetManager.font.draw(uiBatch, "Player " + (i+1) + ": " + scores[i], -150, 0-i*32);
+			AssetManager.font.draw(uiBatch, "Player " + (i+1) + ": " + scores[i], -150, 0-i*32);
 		
 		super.drawUi(uiBatch);
 	}
