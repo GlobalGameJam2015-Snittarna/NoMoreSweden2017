@@ -1,25 +1,27 @@
 package com.jotom.nms;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
 public class TileType {
 	private char marker; // represents it in map file
-	private Animation animation;
+	private TextureRegion texture;
 	private boolean destructible;
 	
 	public char getMarker() {
 		return marker;
 	}
 
-	public Animation getAnimation() {
-		return animation;
+	public TextureRegion getTexture() {
+		return texture;
 	}
 
 	public boolean isDestructible() {
 		return destructible;
 	}
 
-	public TileType(char marker, Animation animation, boolean destructible) {
+	public TileType(char marker, TextureRegion texture, boolean destructible) {
 		this.marker = marker;
-		this.animation = animation;
+		this.texture = texture;
 		this.destructible = destructible;
 	}
 }

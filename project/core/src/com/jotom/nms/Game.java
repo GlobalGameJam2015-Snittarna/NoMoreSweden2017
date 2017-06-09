@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 
 public class Game extends ApplicationAdapter {
 	/**
@@ -61,6 +62,9 @@ public class Game extends ApplicationAdapter {
 
 	@Override
 	public void render () {
+		Vector3 mouse = currentScene.getCamera().unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+		System.out.println(mouse);
+		
 		currentScene.update(Gdx.graphics.getDeltaTime());
 		
 		Gdx.gl.glClearColor(43/255f, 84/255f, 117/255f, 1);

@@ -10,6 +10,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Music.OnCompletionListener;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
@@ -61,7 +62,6 @@ public class GameScene extends Scene {
 	}
 	
 	public void drawGame(SpriteBatch batch) {
-		AssetManager.font.draw(batch, "origin", 0, 0);
 		super.drawGame(batch);
 	}
 }

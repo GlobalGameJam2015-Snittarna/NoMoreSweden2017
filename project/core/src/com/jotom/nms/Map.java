@@ -9,8 +9,8 @@ public class Map {
 	private final static int TILESIZE = 32;
 	
 	private static TileType[] tileTypes = new TileType[] {
-		new TileType('x', new Animation(new Sprite(AssetManager.getTexture("indestructible-tile"))), false),
-		new TileType('d', new Animation(new Sprite(AssetManager.getTexture("destructible-tile"))), false),
+		new TileType('x', AssetManager.getTexture("indestructible-tile"), false),
+		new TileType('d', AssetManager.getTexture("destructible-tile"), false),
 		
 	};
 	
@@ -26,15 +26,15 @@ public class Map {
 		String file = Gdx.files.internal("maps/" + map + ".map").readString();
 		
 		String[] lines = file.split("\n");
-		int x = 0;
+		int y = 0;
 		for (String line : lines) {
-			int y = 0;
+			int x = 0;
 			for (char c : line.toCharArray()) {
 				TileType t = findTileType(c);
 				if (t != null) scene.addObject(new Tile(new Vector2(x, y).scl(TILESIZE), t));
-				y++;
+				x++;
 			}
-			x++;
+			y++;
 		}
 	}
 }
