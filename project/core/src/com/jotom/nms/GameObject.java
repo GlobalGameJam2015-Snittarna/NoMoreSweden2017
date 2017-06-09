@@ -107,6 +107,11 @@ public abstract class GameObject {
 		return position.cpy();
 	}
 	
+	public float lerp(float s, float e, float t)
+	{
+	    return s + t * (e - s);
+	}
+	
 	public void setPosition(Vector2 position) {
 		this.position = position.cpy();
 		this.sprite.setPosition(this.position.x, this.position.y);

@@ -8,9 +8,9 @@ import com.badlogic.gdx.math.Vector2;
 public class BloodSplatter extends GameObject {
 	boolean hasHitGround;
 	
-	public float distanceToGround;
-	public float speed;
-	public float angle;
+	private float distanceToGround;
+	private float speed;
+	private float angle;
 	
 	Random random = new Random();
 	
@@ -38,7 +38,7 @@ public class BloodSplatter extends GameObject {
 			distanceToGround = 0;
 			hasHitGround = true;
 		}
-			
+
 		super.update(dt);
 	}
 }

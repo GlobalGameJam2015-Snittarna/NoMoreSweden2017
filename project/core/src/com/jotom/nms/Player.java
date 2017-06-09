@@ -1,6 +1,7 @@
 package com.jotom.nms;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -46,6 +47,8 @@ public class Player extends GameObject {
 	
 	private WeaponTypes weapon;
 	
+	private Random random = new Random();
+	
 	// temp
 	private int leftKey, rightKey, downKey, upKey, shootKey;
 	
@@ -90,6 +93,7 @@ public class Player extends GameObject {
 						health -= 1;
 						if(health <= 0) {
 							setSprite(new Animation(new Sprite(AssetManager.getTexture("dead" + (tag+1)))));
+							getSprite().setColor(1, 0, 0, 1);
 						}
 						getScene().removeObject(g);
 					}
@@ -106,6 +110,8 @@ public class Player extends GameObject {
 					}
 				}
 			}
+			
+			getSprite().setColor(1, lerp(getSprite().getColor().g, 1, 3f*dt), lerp(getSprite().getColor().b, 1, 3f*dt), 1);
 		}
 				
 		if(isCurrentPlayer && health > 0) {
@@ -204,7 +210,7 @@ public class Player extends GameObject {
 				Animation a = new Animation(new Sprite(AssetManager.getTexture("plot")));
 				a.setSize(1, 1);
 				float t = (float)i;
-				a.setColor((tag == 0) ? 1 : 0, 0, (tag == 1) ? 1 : 0, 1- (t/((float)length)));
+				a.setColor((tag == 0) ? 1 : 0, 0, (tag == 1) ? 1 : 0, 1 - (t/((float)length)));
 				a.setPosition(getPosition().cpy().x + ((float)Math.cos(shootAngle)*i) + getSize().x/2, getPosition().cpy().y+ ((float)Math.sin(shootAngle)*i) + getSize().y/2);
 			
 				a.draw(batch);
