@@ -53,8 +53,10 @@ public class GameScene extends Scene {
 	
 	
 	public void update(float dt) {
-		if(Gdx.input.isKeyJustPressed(Keys.ENTER))
-			addObject(new Player(new Vector2(64, 64), new Vector2(32, 32), new Animation(new Sprite(AssetManager.getTexture("player1")))));
+		if(Gdx.input.isKeyJustPressed(Keys.ENTER)) {
+			addObject(new Player(new Vector2(64, 64), new Vector2(32, 32), new Animation(new Sprite(AssetManager.getTexture("player1"))), 0));
+			addObject(new Player(new Vector2(400, 64), new Vector2(32, 32), new Animation(new Sprite(AssetManager.getTexture("player2"))), 1));
+		}
 		
 		super.update(dt);
 	}

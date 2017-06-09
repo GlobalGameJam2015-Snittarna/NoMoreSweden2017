@@ -8,10 +8,17 @@ public class Projectile extends GameObject {
 	private float speed;
 	private float angle;
 	
-	public Projectile(Vector2 position, Vector2 size, Animation sprite) {
+	private int tag;
+	
+	public Projectile(Vector2 position, Vector2 size, Animation sprite, float angle, float speed, int tag) {
 		super(position, size, sprite);
 		setOriginCenter();
-		setRotation(angle);
+		this.angle = angle;
+		this.speed = speed;
+		
+		this.tag = tag;
+		
+		setRotation(angle*57.2957795f);
 	}
 	
 	public void update(float dt) {
@@ -21,5 +28,9 @@ public class Projectile extends GameObject {
 	
 	public Vector2 moveDirection() {
 		return new Vector2((float)Math.cos(angle)*speed, (float)Math.sin(angle)*speed);
+	}
+	
+	public int getTag() {
+		return tag;
 	}
 }

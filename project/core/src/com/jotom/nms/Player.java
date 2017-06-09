@@ -4,9 +4,14 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
 public class Player extends GameObject {
+	private final float ORGINAL_SPEED = 50;
+	
+	private final int START_HEALTH = 1;
+	
 	public boolean isCurrentPlayer;
 	
 	private boolean cantDoNextMove;
@@ -36,9 +41,11 @@ public class Player extends GameObject {
 	// temp
 	private int leftKey, rightKey, downKey, upKey, shootKey;
 	
-	public Player(Vector2 position, Vector2 size, Animation sprite) {
+	public Player(Vector2 position, Vector2 size, Animation sprite, int tag) {
 		super(position, size, sprite);
 		setOriginCenter();
+		
+		this.tag = tag;
 		
 		startPoint = position.cpy();
 		
@@ -50,13 +57,17 @@ public class Player extends GameObject {
 		
 		isCurrentPlayer = true;
 		
-		speed = 50;
+		maxShootDelay = 64;
+		
+		speed = ORGINAL_SPEED;
+		
+		health = START_HEALTH;
 		
 		leftKey = (tag == 0) ? Keys.LEFT : Keys.A;
 		rightKey = (tag == 0) ? Keys.RIGHT : Keys.D;
 		upKey = (tag == 0) ? Keys.UP : Keys.W;
 		downKey = (tag == 0) ? Keys.DOWN : Keys.S;
-		shootKey = (tag == 0) ? Keys.ALT_RIGHT : Keys.Q;
+		shootKey = (tag == 0) ? Keys.M : Keys.Q;
 	}
 	
 	public void update(float dt) {
@@ -64,7 +75,20 @@ public class Player extends GameObject {
 		
 		if(moveDirections.size() > 1 && Gdx.input.isKeyPressed(Keys.SPACE)) reset();
 		
-		if(isCurrentPlayer) {
+		if(health > 0) 
+			for(GameObject g : getScene().getObjects()) {
+				if(g instanceof Projectile) {
+					if(g.getHitbox().collision(getHitbox()) && ((Projectile) g).getTag() != tag) {
+						health -= 1;
+						if(health <= 0) {
+							setSprite(new Animation(new Sprite(AssetManager.getTexture("dead" + (tag+1)))));
+						}
+						getScene().removeObject(g);
+					}
+				}
+			}
+		
+		if(isCurrentPlayer && health > 0) {
 			if(Gdx.input.isKeyPressed(leftKey)) {
 				shootAngle += 5 * dt;
 			}
@@ -85,7 +109,15 @@ public class Player extends GameObject {
 				movmentDirection = Vector2.Zero;
 			}
 			
-			if(Gdx.input.isKeyPressed(shootKey)) {
+			if(shootDelay > 0) 
+				shootDelay += 1;
+			if(shootDelay == maxShootDelay) {
+				shootDelay = 0;
+			}
+			
+			if(Gdx.input.isKeyPressed(shootKey) && shootDelay == 0) {
+				shoot();
+				shootDelay = 1;
 				moves.add(Move.SHOOT);
 			} else {
 				moves.add(Move.WALK);
@@ -96,8 +128,10 @@ public class Player extends GameObject {
 			moveDirections.add(movmentDirection.cpy());
 			currentMoveIndex += 1;
 			shootAngels.add(new Float(shootAngle));
-		} else {
-			if(!cantDoNextMove && currentMoveIndex != moveDirections.size()-1) {
+		}
+		
+		if(!isCurrentPlayer) {
+			if(!cantDoNextMove && currentMoveIndex != moveDirections.size()-1 && health > 0) {
 				doMove(currentMoveIndex);
 				currentMoveIndex++;
 			}
@@ -113,9 +147,13 @@ public class Player extends GameObject {
 			setPosition(getPosition().add(moveDirections.get(currentMoveIndex).cpy()));
 		
 			if(moves.get(currentMoveIndex) == Move.SHOOT) {
-				
+				shoot();
 			}
 		}
+	}
+	
+	public void shoot() {
+		getScene().addObject(new Projectile(new Vector2(getPosition().cpy().x + getSize().x/2, getPosition().cpy().y + getSize().y/2), new Vector2(8, 8), new Animation(new Sprite(AssetManager.getTexture("bullet"))), shootAngle, 8, tag));
 	}
 	
 	public void reset() {
@@ -125,6 +163,9 @@ public class Player extends GameObject {
 		setPosition(startPoint.cpy());
 		shootAngle = 0;
 		movmentDirection = Vector2.Zero;
-		health = 1;
+		health = START_HEALTH;
+		speed = ORGINAL_SPEED;
+		
+		setSprite(new Animation(new Sprite(AssetManager.getTexture("player" + (tag+1)))));
 	}
 }
