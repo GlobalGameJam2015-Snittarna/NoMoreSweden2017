@@ -63,6 +63,10 @@ public class GameScene extends Scene {
 			addObject(new Player(new Vector2(400, 64), new Vector2(32, 32), new Animation(new Sprite(AssetManager.getTexture("player2"))), 1));
 		}
 		
+		if(Gdx.input.isKeyJustPressed(Keys.G)) {
+			this.addObject(new BloodSplatter(new Vector2(102, 164)));
+		}
+		
 		super.update(dt);
 	}
 	

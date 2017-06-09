@@ -51,6 +51,10 @@ public abstract class GameObject {
 		
 	}
 	
+	public void setScale(float s) {
+		sprite.setScale(s);
+	}
+	
 	protected void setOriginCenter() {
 		getSprite().setOriginCenter();
 		origin = new Vector2(getSprite().getOriginX(), getSprite().getOriginY());

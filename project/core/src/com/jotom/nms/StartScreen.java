@@ -19,6 +19,6 @@ public class StartScreen extends Scene {
 	public void drawUi(SpriteBatch uiBatch) {
 		super.drawUi(uiBatch);
 		AssetManager.font.draw(uiBatch, "PRESS SPACE TO START", -100, 50);
-		AssetManager.font.draw(uiBatch, "WASD to move \nSpace to drop bombs\nPick up barrels to build bombs when you are a boat\nPick up planks to build a boat\nKill hands and surive for points", -165, -0);
+		//AssetManager.font.draw(uiBatch, "WASD to move \nSpace to drop bombs\nPick up barrels to build bombs when you are a boat\nPick up planks to build a boat\nKill hands and surive for points", -165, -0);
 	}
 }

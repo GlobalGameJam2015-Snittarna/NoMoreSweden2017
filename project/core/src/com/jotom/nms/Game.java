@@ -56,7 +56,7 @@ public class Game extends ApplicationAdapter {
 	}
 
 	@Override
-	public void render () {
+	public void render() {
 		if(Gdx.input.isKeyPressed(Keys.ESCAPE)) Gdx.app.exit();
 		
 		Vector3 mouse = currentScene.getCamera().unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));

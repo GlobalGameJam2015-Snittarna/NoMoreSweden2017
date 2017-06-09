@@ -20,6 +20,8 @@ public class AssetManager {
 		textureRegions = new HashMap<String, TextureRegion>();
 		spriteSheet = new Texture("spritesheet.png");
 		
+		font.getData().setScale(0.5f);
+		
 		for (String s : Gdx.files.internal("textures.txt").readString().split("\n")) {
 			if (s.trim().equals("")) continue;
 			System.out.println(s);

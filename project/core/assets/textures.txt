@@ -16,3 +16,5 @@ player2step1,34,67,32,32
 player2step2,67,67,32,32
 player2step3,100,67,32,32
 player2step4,133,67,32,32
+bloodSplatter1,1,133,32,32
+bloodSplatter2,34,133,32,32
