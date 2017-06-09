@@ -20,8 +20,13 @@ public class GameScene extends Scene {
 	
 	private Random random;
 	
+	// (e du) god (eller) praxis
+	private int[] scores;
+	
 	public GameScene() {
 		random = new Random();
+		
+		scores = new int[2];
 		
 		Map.loadMap(1, this);
 		
@@ -63,10 +68,18 @@ public class GameScene extends Scene {
 	
 	public void drawUi(SpriteBatch uiBatch) {
 		if(gameOver) AssetManager.font.draw(uiBatch, "GAME OVER", 0, 0);
+		
+		for(int i = 0; i < scores.length; i++)
+		AssetManager.font.draw(uiBatch, "Player " + (i+1) + ": " + scores[i], -150, 0-i*32);
+		
 		super.drawUi(uiBatch);
 	}
 	
 	public void drawGame(SpriteBatch batch) {
 		super.drawGame(batch);
+	}
+	
+	public void raiseScore(int index) {
+		scores[index] += 1;
 	}
 }

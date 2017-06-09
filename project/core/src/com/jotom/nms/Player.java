@@ -17,6 +17,7 @@ public class Player extends GameObject {
 	public boolean isCurrentPlayer;
 	
 	private boolean cantDoNextMove;
+	private boolean hasGivenScore;
 	
 	public enum WeaponTypes {PISTOL, SPREADGUN, MACHINE_GUN};
 	public enum Move {SHOOT, WALK};
@@ -33,6 +34,7 @@ public class Player extends GameObject {
 	private int shootDelay;
 	private int maxShootDelay;
 	private int tag;
+	private int score;
 	
 	private int currentFrame;
 	
@@ -81,7 +83,7 @@ public class Player extends GameObject {
 		
 		if(moveDirections.size() > 1 && Gdx.input.isKeyPressed(Keys.SPACE)) reset();
 		
-		if(health > 0) 
+		if(health > 0) {
 			for(GameObject g : getScene().getObjects()) {
 				if(g instanceof Projectile) {
 					if(g.getHitbox().collision(getHitbox()) && ((Projectile) g).getTag() != tag) {
@@ -93,7 +95,19 @@ public class Player extends GameObject {
 					}
 				}
 			}
-		
+		} else {
+			if(!hasGivenScore) {
+				for(GameObject g : getScene().getObjects()) {
+					if(g instanceof Player) {
+						if(((Player) g).getTag() != tag && ((Player) g).isCurrentPlayer && !hasGivenScore) {
+							((GameScene) getScene()).raiseScore(((Player) g).getTag());
+							hasGivenScore = true;
+						}
+					}
+				}
+			}
+		}
+				
 		if(isCurrentPlayer && health > 0) {
 			if(Gdx.input.isKeyPressed(leftKey)) {
 				shootAngle += 5 * dt;
@@ -210,5 +224,9 @@ public class Player extends GameObject {
 		speed = ORGINAL_SPEED;
 		
 		setSprite(new Animation(new Sprite(AssetManager.getTexture("player" + (tag+1)))));
+	}
+	
+	public int getTag() {
+		return tag;
 	}
 }
