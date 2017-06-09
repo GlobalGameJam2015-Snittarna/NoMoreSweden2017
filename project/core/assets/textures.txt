@@ -1,2 +1,2 @@
-destructible-tile,32,0,32,32
-indestructible-tile,0,0,32,32
+destructible-tile,34,1,32,32
+indestructible-tile,1,1,32,32
