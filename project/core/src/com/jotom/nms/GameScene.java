@@ -21,14 +21,13 @@ public class GameScene extends Scene {
 	private Random random;
 	
 	public GameScene() {
-		
 		random = new Random();
 		
 		Map.loadMap(1, this);
 		
 		getCamera().translate(10 * 32, (float) (7.5 * 32));
 		
-		
+		//addObject(new Player(new Vector2(64, 64), new Vector2(32, 32), new Animation(new Sprite(AssetManager.getTexture("player1")))));
 		/*music = Gdx.audio.newMusic(Gdx.files.internal("music/song-intro.mp3"));
 		music.setOnCompletionListener(new OnCompletionListener() {
 			
@@ -54,6 +53,9 @@ public class GameScene extends Scene {
 	
 	
 	public void update(float dt) {
+		if(Gdx.input.isKeyJustPressed(Keys.ENTER))
+			addObject(new Player(new Vector2(64, 64), new Vector2(32, 32), new Animation(new Sprite(AssetManager.getTexture("player1")))));
+		
 		super.update(dt);
 	}
 	

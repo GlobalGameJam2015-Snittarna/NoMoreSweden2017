@@ -2,6 +2,7 @@ package com.jotom.nms;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -22,12 +23,6 @@ public class Game extends ApplicationAdapter {
 	 * the currently active scene being updated and drawn.
 	 */
 	public static Scene currentScene;
-	
-	public static int highscore = 15;
-	
-	public static void checkHighscore(int score) {
-		if(score > highscore) highscore = score;
-	}
 	
 	private OrthographicCamera uiCam;
 	
@@ -62,6 +57,8 @@ public class Game extends ApplicationAdapter {
 
 	@Override
 	public void render () {
+		if(Gdx.input.isKeyPressed(Keys.ESCAPE)) Gdx.app.exit();
+		
 		Vector3 mouse = currentScene.getCamera().unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 		System.out.println(mouse);
 		

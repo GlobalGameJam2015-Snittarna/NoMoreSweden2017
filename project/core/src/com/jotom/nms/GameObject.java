@@ -87,6 +87,10 @@ public abstract class GameObject {
 		if (sprite != null) sprite.setOrigin(origin.x, origin.y);
 	}
 	
+	protected void setRotation(float rotation) {
+		sprite.setRotation(rotation);
+	}
+	
 	public void draw(SpriteBatch batch) {
 		if(sprite != null) sprite.draw(batch);
 	}
