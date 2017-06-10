@@ -22,3 +22,10 @@ bloodSplatter2,34,133,32,32
 roundover,182,210,197,99
 you,199,34,48,42
 spawn,100,1,32,32
+rocket,10,100,12,12
+explosion,1,166,32,32
+explosion,34,166,32,32
+explosion,67,166,32,32
+explosion,100,166,32,32
+explosion,133,166,32,32
+explosion,166,166,32,32
