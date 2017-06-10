@@ -27,3 +27,10 @@ Game for no more sweden 2017
 - Juice
 - Sounds
 - Vapen
+### Todo list för lördagen
+
+#### Tom
+- Fixa så att man ska spela rundor
+- Jucie
+#### Carl
+- Collision
