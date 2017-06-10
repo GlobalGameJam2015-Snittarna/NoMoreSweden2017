@@ -97,7 +97,7 @@ public class Player extends GameObject {
 							setSprite(new Animation(new Sprite(AssetManager.getTexture("dead" + (tag+1)))));
 							getSprite().setColor(1, 0, 0, 1);
 							((GameScene)getScene()).raiseScore(getTag() == 1 ? 0 : 1, (isCurrentPlayer ? 10 : 1) * (((Projectile)g).isByCurrentPlayer() ? 2 : 1));
-							if (isCurrentPlayer && ((Projectile)g).isByCurrentPlayer()) getScene().getCamera().shake(1);
+							getScene().getCamera().shake(1 + (isCurrentPlayer ? 3 : 0) + (((Projectile)g).isByCurrentPlayer() ? 3 : 0));
 						}
 						getScene().removeObject(g);
 					}

@@ -52,17 +52,17 @@ public class Camera extends OrthographicCamera {
 	
 	public void shake(float level) {
 		shake = level;
-		oldPosition = position;
+		oldPosition = position.cpy();
 	}
 	
 	public void update(float dt) {
 		if (shake > 0) {
-			this.setPosition(oldPosition.x + r.nextFloat() * shake * GAIN, oldPosition.y + r.nextFloat() * shake * GAIN);
+			this.setPosition(oldPosition.x + (r.nextFloat() - .5f) * shake * GAIN, oldPosition.y + (r.nextFloat() - .5f) * shake * GAIN);
 		} else if (oldPosition != null) {
 			this.setPosition(oldPosition.x, oldPosition.y);
 			System.out.println("shake done");
 		}
-		shake -= dt;
+		shake -= dt * (shake * 2 * shake + 1f);
 	}
 	
 	public void update() {
