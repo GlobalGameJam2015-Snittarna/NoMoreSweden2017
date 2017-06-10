@@ -87,6 +87,8 @@ public class GameScene extends Scene {
 		super.update(dt);
 	}
 	
+	boolean playing;
+	
 	public void updateRound(float dt) {
 		roundTime += 1 * dt;
 		
@@ -109,6 +111,10 @@ public class GameScene extends Scene {
 					((Player)g).roundOver = true;
 				}
 			}
+			if (!playing) {
+				playing = true;
+				AssetManager.getSound("next-level").play();
+			}
 			
 			if(nextRoundDelay > 64*4) {
 				dt = 1;
@@ -121,6 +127,7 @@ public class GameScene extends Scene {
 	}
 	
 	public void resetRound() {
+		playing = false;
 		for(GameObject g : getObjects()) {
 			if(g instanceof Projectile || g instanceof Tile) {
 				removeObject(g);

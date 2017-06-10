@@ -124,6 +124,7 @@ public class Player extends GameObject {
 							float angle = i *360 / np + random.nextFloat() * 10;
 							getScene().addObject(new Particle(getPosition(), new Vector2((float)Math.cos(angle), (float)Math.sin(angle)).scl(100), Color.RED));
 						}
+						AssetManager.getSound("death").play();
 					}
 				}
 			}
@@ -263,11 +264,13 @@ public class Player extends GameObject {
 		if(weapon == WeaponTypes.PISTOL) {
 			getScene().addObject(new Projectile(new Vector2(getPosition().cpy().x + getSize().x/2, getPosition().cpy().y + getSize().y/2), new Vector2(8, 8), new Animation(new Sprite(AssetManager.getTexture("bullet"))), shootAngle, 500, tag, isCurrentPlayer, Projectile.Types.BULLET));
 			maxShootDelay = 64; 
+			AssetManager.getSound("shot").play();
 		}
 		
 		if(weapon == WeaponTypes.MACHINE_GUN) {
 			getScene().addObject(new Projectile(new Vector2(getPosition().cpy().x + getSize().x/2, getPosition().cpy().y + getSize().y/2), new Vector2(8, 8), new Animation(new Sprite(AssetManager.getTexture("bullet"))), shootAngle, 500, tag, isCurrentPlayer, Projectile.Types.BULLET));
 			maxShootDelay = 64/4; 
+			AssetManager.getSound("other-shot").play();
 		}
 		
 		if(weapon == WeaponTypes.SPREADGUN) {
@@ -275,11 +278,13 @@ public class Player extends GameObject {
 				getScene().addObject(new Projectile(new Vector2(getPosition().cpy().x + getSize().x/2, getPosition().cpy().y + getSize().y/2), new Vector2(8, 8), new Animation(new Sprite(AssetManager.getTexture("bullet"))), shootAngle+((float)Math.PI/8)*i, 500, tag, isCurrentPlayer, Projectile.Types.DEACCELERTING));
 			}
 			maxShootDelay = 64; 
+			AssetManager.getSound("shot").play();
 		}
 		
 		if(weapon == WeaponTypes.ROCKET_LAUNCHER) {
 			getScene().addObject(new Projectile(new Vector2(getPosition().cpy().x + getSize().x/2, getPosition().cpy().y + getSize().y/2), new Vector2(12, 12), new Animation(new Sprite(AssetManager.getTexture("rocket"))), shootAngle, 500, tag, isCurrentPlayer, Projectile.Types.ROCKET));
 			maxShootDelay = 64; 
+			AssetManager.getSound("other-shot").play();
 		}
 	}
 	

@@ -49,6 +49,7 @@ public class Projectile extends GameObject {
 		Tile c = Map.collidesWihTile(getHitbox(), getScene());
 		if (c != null && c.getType().isDestructible()) { 
 			getScene().removeObject(c);
+			AssetManager.getSound("shot").play();
 			if (c.getType().getMarker() == 'd') {
 				int np = 10;
 				for (int i = 0; i < np; i++) {
