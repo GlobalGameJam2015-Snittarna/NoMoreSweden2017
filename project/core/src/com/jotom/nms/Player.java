@@ -101,6 +101,12 @@ public class Player extends GameObject {
 				
 		if(health > 0) {
 			for(GameObject g : getScene().getObjects()) {
+				if(g instanceof Explosion) {
+					if(g.getHitbox().collision(getHitbox()) && ((Explosion) g).isDeadliy()) {
+						health = 0;
+					}
+				}
+				
 				if(g instanceof Projectile) {
 					if(g.getHitbox().collision(getHitbox()) && ((Projectile) g).getTag() != tag) {
 						if(((Projectile) g).getType() == Projectile.Types.ROCKET) getScene().addObject(new Explosion(new Vector2(getPosition().x+16, getPosition().y)));

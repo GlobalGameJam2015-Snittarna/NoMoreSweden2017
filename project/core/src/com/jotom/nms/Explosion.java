@@ -29,4 +29,8 @@ public class Explosion extends GameObject {
 		
 		super.update(dt);
 	}
+	
+	public boolean isDeadliy() {
+		return currentFrame <= 2;
+	}
 }
