@@ -112,6 +112,13 @@ public class Player extends GameObject {
 				notMoving = axisValueX == 0 && axisValueY == 0;
 				
 				moveAngle = (float)Math.atan2(-axisValueY, axisValueX);
+				
+				float axisValueRightX = controller.getAxis(1);
+				float axisValueRightY = controller.getAxis(0);
+				
+				if(axisValueX < 0.1f && axisValueX > -0.1f) axisValueX = 0;
+				if(axisValueY < 0.1f && axisValueY > -0.1f) axisValueY = 0;
+				
 			}
 			index++;
 		}
