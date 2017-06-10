@@ -11,8 +11,8 @@ public class Map {
 	private static TileType[] tileTypes = new TileType[] {
 		new TileType('x', AssetManager.getTexture("indestructible-tile"), false, false),
 		new TileType('d', AssetManager.getTexture("destructible-tile"), true, false),
-		new TileType('s', AssetManager.getTexture("indestructible-tile"), false, true),
-		new TileType('S', AssetManager.getTexture("indestructible-tile"), false, true),
+		new TileType('s', AssetManager.getTexture("spawn"), false, true),
+		new TileType('S', AssetManager.getTexture("spawn"), false, true),
 		new TileType(' ', AssetManager.getTexture("grass-tile"), false, true)
 	};
 	
