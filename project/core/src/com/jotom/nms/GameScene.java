@@ -61,8 +61,7 @@ public class GameScene extends Scene {
 	
 	public void update(float dt) {
 		if(Gdx.input.isKeyJustPressed(Keys.ENTER)) {
-			addObject(new Player(new Vector2(64, 64), new Vector2(32, 32), new Animation(new Sprite(AssetManager.getTexture("player1"))), 0));
-			addObject(new Player(new Vector2(400, 64), new Vector2(32, 32), new Animation(new Sprite(AssetManager.getTexture("player2"))), 1));
+			resetRound();
 		}
 		
 		if(Gdx.input.isKeyJustPressed(Keys.G)) {
@@ -77,6 +76,23 @@ public class GameScene extends Scene {
 		}
 		
 		super.update(dt);
+	}
+	
+	public void resetRound() {
+		for(GameObject g : getObjects()) {
+			if(g instanceof Projectile || g instanceof Tile) {
+				removeObject(g);
+			}
+			
+			if(g instanceof Player) {
+				((Player) g).reset();
+			}
+		}
+		
+		addObject(new Player(new Vector2(64, 64+random.nextInt(200)), new Vector2(32, 32), new Animation(new Sprite(AssetManager.getTexture("player1"))), 0));
+		addObject(new Player(new Vector2(400, 64+random.nextInt(200)), new Vector2(32, 32), new Animation(new Sprite(AssetManager.getTexture("player2"))), 1));
+		
+		Map.loadMap(1, this);
 	}
 	
 	public void drawUi(SpriteBatch uiBatch) {
