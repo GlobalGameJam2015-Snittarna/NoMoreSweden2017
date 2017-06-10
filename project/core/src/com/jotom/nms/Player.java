@@ -245,18 +245,18 @@ public class Player extends GameObject {
 	
 	public void shoot() {
 		if(weapon == WeaponTypes.PISTOL) {
-			getScene().addObject(new Projectile(new Vector2(getPosition().cpy().x + getSize().x/2, getPosition().cpy().y + getSize().y/2), new Vector2(8, 8), new Animation(new Sprite(AssetManager.getTexture("bullet"))), shootAngle, 500, tag, isCurrentPlayer));
+			getScene().addObject(new Projectile(new Vector2(getPosition().cpy().x + getSize().x/2, getPosition().cpy().y + getSize().y/2), new Vector2(8, 8), new Animation(new Sprite(AssetManager.getTexture("bullet"))), shootAngle, 500, tag, isCurrentPlayer, Projectile.Types.BULLET));
 			maxShootDelay = 64; 
 		}
 		
 		if(weapon == WeaponTypes.MACHINE_GUN) {
-			getScene().addObject(new Projectile(new Vector2(getPosition().cpy().x + getSize().x/2, getPosition().cpy().y + getSize().y/2), new Vector2(8, 8), new Animation(new Sprite(AssetManager.getTexture("bullet"))), shootAngle, 500, tag, isCurrentPlayer));
+			getScene().addObject(new Projectile(new Vector2(getPosition().cpy().x + getSize().x/2, getPosition().cpy().y + getSize().y/2), new Vector2(8, 8), new Animation(new Sprite(AssetManager.getTexture("bullet"))), shootAngle, 500, tag, isCurrentPlayer, Projectile.Types.BULLET));
 			maxShootDelay = 64/4; 
 		}
 		
 		if(weapon == WeaponTypes.SPREADGUN) {
 			for(int i = -1; i < 2; i++) {
-				getScene().addObject(new Projectile(new Vector2(getPosition().cpy().x + getSize().x/2, getPosition().cpy().y + getSize().y/2), new Vector2(8, 8), new Animation(new Sprite(AssetManager.getTexture("bullet"))), shootAngle+((float)Math.PI/8)*i, 500, tag, isCurrentPlayer));
+				getScene().addObject(new Projectile(new Vector2(getPosition().cpy().x + getSize().x/2, getPosition().cpy().y + getSize().y/2), new Vector2(8, 8), new Animation(new Sprite(AssetManager.getTexture("bullet"))), shootAngle+((float)Math.PI/8)*i, 500, tag, isCurrentPlayer, Projectile.Types.DEACCELERTING));
 			}
 			maxShootDelay = 64; 
 		}
