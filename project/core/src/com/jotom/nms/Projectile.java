@@ -51,6 +51,7 @@ public class Projectile extends GameObject {
 			getScene().addObject(new Explosion(new Vector2(getPosition().x-32, getPosition().y-32)));
 		if (c != null && c.getType().isDestructible()) { 
 			getScene().removeObject(c);
+			AssetManager.getSound("shot").play();
 			if (c.getType().getMarker() == 'd') {
 				int np = 10;
 				for (int i = 0; i < np; i++) {

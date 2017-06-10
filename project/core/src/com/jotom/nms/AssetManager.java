@@ -53,7 +53,7 @@ public class AssetManager {
 		if (sounds.containsKey(name)) {
 			return sounds.get(name);
 		} else {
-			sounds.put(name, Gdx.audio.newSound(Gdx.files.internal("music/" + name + ".mp3")));
+			sounds.put(name, Gdx.audio.newSound(Gdx.files.internal(name + ".wav")));
 			return sounds.get(name);
 		}
 	}
