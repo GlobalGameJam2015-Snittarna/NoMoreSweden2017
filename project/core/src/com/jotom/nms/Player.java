@@ -96,17 +96,18 @@ public class Player extends GameObject {
 						if(health <= 0) {
 							setSprite(new Animation(new Sprite(AssetManager.getTexture("dead" + (tag+1)))));
 							getSprite().setColor(1, 0, 0, 1);
+							((GameScene)getScene()).raiseScore(getTag() == 1 ? 0 : 1, isCurrentPlayer ? 10 : 1);
 						}
 						getScene().removeObject(g);
 					}
 				}
 			}
 		} else {
-			if(!hasGivenScore) {
+			if(!hasGivenScore && false) {
 				for(GameObject g : getScene().getObjects()) {
 					if(g instanceof Player) {
 						if(((Player) g).getTag() != tag && ((Player) g).isCurrentPlayer && !hasGivenScore) {
-							((GameScene) getScene()).raiseScore(((Player) g).getTag());
+							((GameScene) getScene()).raiseScore(((Player) g).getTag(), isCurrentPlayer ? 10 : 1);
 							hasGivenScore = true;
 						}
 					}

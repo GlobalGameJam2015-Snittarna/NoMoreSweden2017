@@ -48,11 +48,15 @@ public class Map {
 	 * @param scene
 	 */
 	public static Tile firstTile(char marker, Scene scene) {
+		System.out.println("looking for " + marker);
+		System.out.println(scene.getObjects().size() + " objects");
 		for (GameObject g : scene.getObjects()) {
 			if (g instanceof Tile) {
 				Tile t = (Tile)g;
+				System.out.println("tile " + t);
 				if (t.getType().getMarker() == marker) return t;
-			}
+				System.out.println("not it");
+			} else System.out.println(" not tile");
 		}
 		return null;
 	}
@@ -74,6 +78,7 @@ public class Map {
 			for (char c : line.toCharArray()) {
 				TileType t = findTileType(c);
 				if (t != null) scene.addObject(new Tile(new Vector2(x, y).scl(TILESIZE), t));
+				else System.out.println("couldnt find tiletype " + c);
 				x++;
 			}
 			y++;

@@ -35,6 +35,10 @@ public class GameScene extends Scene {
 		scores = new int[2];
 		
 		Map.loadMap(1, this);
+		super.update(0); // load tiles into the right list
+		
+		System.out.println(this.getObjects().size() + " objects");
+
 		
 		getCamera().translate(10 * 32, (float) (7.5 * 32));
 		
@@ -110,7 +114,10 @@ public class GameScene extends Scene {
 			}
 		}
 		
-		addObject(new Player(Map.firstTile('s', this).getPosition().add(Utils.randomVector(32, random)), new Vector2(32, 32), new Animation(new Sprite(AssetManager.getTexture("player1"))), 0));
+		addObject(new Player(
+				Map.firstTile('s', this)
+				.getPosition()
+				.add(Utils.randomVector(32, random)), new Vector2(32, 32), new Animation(new Sprite(AssetManager.getTexture("player1"))), 0));
 		addObject(new Player(Map.firstTile('S', this).getPosition().add(Utils.randomVector(32, random)), new Vector2(32, 32), new Animation(new Sprite(AssetManager.getTexture("player2"))), 1));
 		
 		Map.loadMap(1, this);
@@ -129,7 +136,7 @@ public class GameScene extends Scene {
 		super.drawGame(batch);
 	}
 	
-	public void raiseScore(int index) {
-		scores[index] += 1;
+	public void raiseScore(int index, int amount) {
+		scores[index] += amount;
 	}
 }
