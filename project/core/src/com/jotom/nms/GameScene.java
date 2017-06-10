@@ -9,6 +9,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Music.OnCompletionListener;
+import com.badlogic.gdx.controllers.Controller;
+import com.badlogic.gdx.controllers.ControllerListener;
+import com.badlogic.gdx.controllers.Controllers;
+import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -40,7 +44,6 @@ public class GameScene extends Scene {
 		nextRoundDelay = 100000+1;
 		
 		System.out.println(this.getObjects().size() + " objects");
-
 		
 		getCamera().setPosition(10 * 32, (float) (7.5 * 32));
 		

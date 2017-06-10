@@ -5,6 +5,8 @@ import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.controllers.Controller;
+import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -48,6 +50,7 @@ public class Player extends GameObject {
 	private float shootAngle;
 	private float showArrowTime;
 	private float showArrowOpacity;
+	private float moveAngle;
 	private ArrayList<Float> shootAngels;
 	
 	private WeaponTypes weapon;
@@ -56,6 +59,8 @@ public class Player extends GameObject {
 	
 	// temp
 	private int leftKey, rightKey, downKey, upKey, shootKey;
+	
+	boolean notMoving;
 	
 	public Player(Vector2 position, Vector2 size, Animation sprite, int tag) {
 		super(position, size, sprite);
@@ -95,6 +100,18 @@ public class Player extends GameObject {
 	}
 	
 	public void update(float dt) {
+		for (Controller controller : Controllers.getControllers()) {
+			float axisValueX = controller.getAxis(1);
+			float axisValueY = controller.getAxis(0);
+			
+			if(axisValueX < 0.1f && axisValueX > -0.1f) axisValueX = 0;
+			if(axisValueY < 0.1f && axisValueY > -0.1f) axisValueY = 0;
+			
+			notMoving = axisValueX == 0 && axisValueY == 0;
+			
+			moveAngle = (float)Math.atan2(-axisValueY, axisValueX);
+		}
+		
 		if (roundOver) dt = 0;
 		
 		setRotation(shootAngle*57.2957795f);
@@ -153,6 +170,7 @@ public class Player extends GameObject {
 				shootAngle -= 5 * dt;
 			}
 			
+			/*
 			if(Gdx.input.isKeyPressed(upKey)) {
 				movmentDirection = new Vector2(((float)Math.cos(shootAngle)*speed)*dt, ((float)Math.sin(shootAngle)*speed)*dt);
 				animationCount += 1*dt;
@@ -168,7 +186,11 @@ public class Player extends GameObject {
 				currentFrame = 0;
 				setSprite(new Animation(new Sprite(AssetManager.getTexture("player" + (tag+1) + "step" + currentFrame))));
 				setRotation(shootAngle*57.2957795f);
-			}
+			}*/
+			System.out.println(moveAngle);
+			
+			if(!notMoving) movmentDirection = new Vector2(((float)Math.cos(moveAngle)*speed)*dt, ((float)Math.sin(moveAngle)*speed)*dt);
+			else movmentDirection = Vector2.Zero;
 			
 			if(shootDelay > 0) 
 				shootDelay += 1;
