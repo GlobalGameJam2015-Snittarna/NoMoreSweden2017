@@ -40,7 +40,7 @@ public class GameScene extends Scene {
 		System.out.println(this.getObjects().size() + " objects");
 
 		
-		getCamera().translate(10 * 32, (float) (7.5 * 32));
+		getCamera().setPosition(10 * 32, (float) (7.5 * 32));
 		
 		//addObject(new Player(new Vector2(64, 64), new Vector2(32, 32), new Animation(new Sprite(AssetManager.getTexture("player1")))));
 		/*music = Gdx.audio.newMusic(Gdx.files.internal("music/song-intro.mp3"));
@@ -66,6 +66,8 @@ public class GameScene extends Scene {
 	}
 	
 	public void update(float dt) {
+		getCamera().update(dt);
+		
 		if(Gdx.input.isKeyJustPressed(Keys.ENTER)) {
 			resetRound();
 		}

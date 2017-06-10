@@ -1,7 +1,10 @@
 package com.jotom.nms;
 
+import java.util.Random;
+
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 
 public class Camera extends OrthographicCamera {
 
@@ -10,6 +13,10 @@ public class Camera extends OrthographicCamera {
 	 */
 	private GameObject follow;
 	private float deadZoneX, deadZoneY;
+	private Vector2 position, oldPosition;
+	private float shake;
+	private final float GAIN = 10;
+	private Random r;
 	
 	/**
 	 * construct a camera with a given viewport size.
@@ -18,6 +25,8 @@ public class Camera extends OrthographicCamera {
 	 */
 	public Camera(int width, int height) {
 		super(width, height);
+		r = new Random();
+		position = new Vector2(0, 0);
 	}
 	
 	/**
@@ -30,6 +39,30 @@ public class Camera extends OrthographicCamera {
 		this.follow = g;
 		this.deadZoneX = deadZoneX;
 		this.deadZoneY = deadZoneY;
+	}
+	
+	public void translate(float x, float y) {
+		super.translate(x, y);
+		position.add(x, y);
+	}
+	
+	public void setPosition(float x, float y) {
+		this.translate(x - position.x, y - position.y);
+	}
+	
+	public void shake(float level) {
+		shake = level;
+		oldPosition = position;
+	}
+	
+	public void update(float dt) {
+		if (shake > 0) {
+			this.setPosition(oldPosition.x + r.nextFloat() * shake * GAIN, oldPosition.y + r.nextFloat() * shake * GAIN);
+		} else if (oldPosition != null) {
+			this.setPosition(oldPosition.x, oldPosition.y);
+			System.out.println("shake done");
+		}
+		shake -= dt;
 	}
 	
 	public void update() {
