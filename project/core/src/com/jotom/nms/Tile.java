@@ -18,7 +18,6 @@ public class Tile extends GameObject {
 	}
 	
 	public void draw(SpriteBatch batch) {
-		System.out.println(this.getHitbox());
 		super.draw(batch);
 	}
 
