@@ -15,8 +15,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 public class GameScene extends Scene {
-	private final int MAX_SCORE = 10;
-
+	private final int MAX_SCORE = 20;
+	private final float MAX_ROUND_TIME = 10;
+	
 	public static boolean gameOver;
 	
 	private Random random;
@@ -24,6 +25,8 @@ public class GameScene extends Scene {
 	// (e du) god (eller) praxis
 	private int[] scores;
 	private int winningPlayer;
+	
+	private float roundTime;
 	
 	public GameScene() {
 		random = new Random();
@@ -57,17 +60,11 @@ public class GameScene extends Scene {
 		}*/
 	}
 	
-	
-	
 	public void update(float dt) {
 		if(Gdx.input.isKeyJustPressed(Keys.ENTER)) {
 			resetRound();
 		}
-		
-		if(Gdx.input.isKeyJustPressed(Keys.G)) {
-			this.addObject(new BloodSplatter(new Vector2(102, 164)));
-		}
-		
+
 		for(int i = 0; i < scores.length; i++) {
 			if(scores[i] >= MAX_SCORE) {
 				gameOver = true;
@@ -75,7 +72,18 @@ public class GameScene extends Scene {
 			}
 		}
 		
+		updateRound(dt);
+		
 		super.update(dt);
+	}
+	
+	public void updateRound(float dt) {
+		roundTime += 1 * dt;
+		
+		if(roundTime >= MAX_ROUND_TIME) {
+			resetRound();
+			roundTime = 0;
+		}
 	}
 	
 	public void resetRound() {
@@ -100,7 +108,7 @@ public class GameScene extends Scene {
 		
 		for(int i = 0; i < scores.length; i++)
 			AssetManager.font.draw(uiBatch, "Player " + (i+1) + ": " + scores[i], -150, 0-i*32);
-		
+		AssetManager.font.draw(uiBatch, "TIME LEFT: " + (int)(MAX_ROUND_TIME - roundTime), 0, 0);
 		super.drawUi(uiBatch);
 	}
 	
