@@ -104,6 +104,10 @@ public class Player extends GameObject {
 				if(g instanceof Explosion) {
 					if(g.getHitbox().collision(getHitbox()) && ((Explosion) g).isDeadliy()) {
 						health = 0;
+						setSprite(new Animation(new Sprite(AssetManager.getTexture("dead" + (tag+1)))));
+						getSprite().setColor(1, 0, 0, 1);
+						((GameScene)getScene()).raiseScore(getTag() == 1 ? 0 : 1, (isCurrentPlayer ? 10 : 1));
+						getScene().getCamera().shake(1 + (isCurrentPlayer ? 3 : 0));
 					}
 				}
 				
