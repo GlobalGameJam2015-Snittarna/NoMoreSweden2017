@@ -100,16 +100,20 @@ public class Player extends GameObject {
 	}
 	
 	public void update(float dt) {
+		int index = 0;
 		for (Controller controller : Controllers.getControllers()) {
-			float axisValueX = controller.getAxis(1);
-			float axisValueY = controller.getAxis(0);
-			
-			if(axisValueX < 0.1f && axisValueX > -0.1f) axisValueX = 0;
-			if(axisValueY < 0.1f && axisValueY > -0.1f) axisValueY = 0;
-			
-			notMoving = axisValueX == 0 && axisValueY == 0;
-			
-			moveAngle = (float)Math.atan2(-axisValueY, axisValueX);
+			if(tag == index) {
+				float axisValueX = controller.getAxis(1);
+				float axisValueY = controller.getAxis(0);
+				
+				if(axisValueX < 0.1f && axisValueX > -0.1f) axisValueX = 0;
+				if(axisValueY < 0.1f && axisValueY > -0.1f) axisValueY = 0;
+				
+				notMoving = axisValueX == 0 && axisValueY == 0;
+				
+				moveAngle = (float)Math.atan2(-axisValueY, axisValueX);
+			}
+			index++;
 		}
 		
 		if (roundOver) dt = 0;
@@ -170,27 +174,28 @@ public class Player extends GameObject {
 				shootAngle -= 5 * dt;
 			}
 			
-			/*
-			if(Gdx.input.isKeyPressed(upKey)) {
-				movmentDirection = new Vector2(((float)Math.cos(shootAngle)*speed)*dt, ((float)Math.sin(shootAngle)*speed)*dt);
-				animationCount += 1*dt;
+			// NÅGON GLÖMMDE VISST EN LINTE CONTROLL(ÄR DET DEN ONDE RUBEN MÅN TRO)
+			if(tag == 1) {
+				if(Gdx.input.isKeyPressed(upKey)) {
+					movmentDirection = new Vector2(((float)Math.cos(shootAngle)*speed)*dt, ((float)Math.sin(shootAngle)*speed)*dt);
+					animationCount += 1*dt;
+				}
+				
+				if(Gdx.input.isKeyPressed(downKey)) {
+					movmentDirection = new Vector2(((float)Math.cos(shootAngle)*-speed)*dt, ((float)Math.sin(shootAngle)*-speed)*dt);
+					animationCount += 1*dt;
+				}
+				
+				if(!Gdx.input.isKeyPressed(downKey) && !Gdx.input.isKeyPressed(upKey)) {
+					movmentDirection = Vector2.Zero;
+					currentFrame = 0;
+					setSprite(new Animation(new Sprite(AssetManager.getTexture("player" + (tag+1) + "step" + currentFrame))));
+					setRotation(shootAngle*57.2957795f);
+				}
+			} else {
+				if(!notMoving) movmentDirection = new Vector2(((float)Math.cos(moveAngle)*speed)*dt, ((float)Math.sin(moveAngle)*speed)*dt);
+				else movmentDirection = Vector2.Zero;
 			}
-			
-			if(Gdx.input.isKeyPressed(downKey)) {
-				movmentDirection = new Vector2(((float)Math.cos(shootAngle)*-speed)*dt, ((float)Math.sin(shootAngle)*-speed)*dt);
-				animationCount += 1*dt;
-			}
-			
-			if(!Gdx.input.isKeyPressed(downKey) && !Gdx.input.isKeyPressed(upKey)) {
-				movmentDirection = Vector2.Zero;
-				currentFrame = 0;
-				setSprite(new Animation(new Sprite(AssetManager.getTexture("player" + (tag+1) + "step" + currentFrame))));
-				setRotation(shootAngle*57.2957795f);
-			}*/
-			System.out.println(moveAngle);
-			
-			if(!notMoving) movmentDirection = new Vector2(((float)Math.cos(moveAngle)*speed)*dt, ((float)Math.sin(moveAngle)*speed)*dt);
-			else movmentDirection = Vector2.Zero;
 			
 			if(shootDelay > 0) 
 				shootDelay += 1;
