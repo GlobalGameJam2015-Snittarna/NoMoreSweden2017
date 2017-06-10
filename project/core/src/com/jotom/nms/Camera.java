@@ -51,8 +51,8 @@ public class Camera extends OrthographicCamera {
 	}
 	
 	public void shake(float level) {
-		shake = level;
-		oldPosition = position.cpy();
+		if (shake <= 0) oldPosition = position.cpy();
+		shake += level;
 	}
 	
 	public void update(float dt) {
@@ -62,7 +62,8 @@ public class Camera extends OrthographicCamera {
 			this.setPosition(oldPosition.x, oldPosition.y);
 			System.out.println("shake done");
 		}
-		shake -= dt * (shake * 2 * shake + 1f);
+		shake -= dt * (shake * 2 * shake + .1f);
+		if (shake < 0) shake = 0;
 	}
 	
 	public void update() {
