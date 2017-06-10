@@ -257,7 +257,7 @@ public class Player extends GameObject {
 	
 	public void giveRandomWeapon() {
 		int id = random.nextInt(4);
-		
+		id = 3;
 		if(id == 0) weapon = WeaponTypes.PISTOL;
 		if(id == 1) weapon = WeaponTypes.MACHINE_GUN;
 		if(id == 2) weapon = WeaponTypes.SPREADGUN;
