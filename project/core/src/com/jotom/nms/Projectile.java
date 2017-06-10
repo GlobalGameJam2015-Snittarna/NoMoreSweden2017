@@ -23,6 +23,11 @@ public class Projectile extends GameObject {
 	
 	public void update(float dt) {
 		setPosition(getPosition().add(moveDirection().cpy()));
+		
+		Tile c = Map.collidesWihTile(getHitbox(), getScene());
+		if (c != null && c.getType().isDestructible()) getScene().removeObject(c);
+		if (c != null && !c.getType().isWalkable()) getScene().removeObject(this);
+		
 		super.update(dt);
 	}
 	

@@ -23,6 +23,25 @@ public class Map {
 		return null;
 	}
 	
+	/**
+	 * 
+	 * @param rect
+	 * @param scene
+	 * @return the first tile collided with, or null if none
+	 */
+	public static Tile collidesWihTile(Rectangle rect, Scene scene) {
+		for (GameObject g : scene.getObjects()) {
+			if (g instanceof Tile) {
+				if (!((Tile) g).getType().isWalkable()) {
+					if (g.getHitbox().collision(rect)) {
+						return (Tile)g;
+					}
+				}
+			}
+		}
+		return null;
+	}
+	
 	/** 
 	 * loads tile locations and adds the tiles to a scene
 	 * @param map

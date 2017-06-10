@@ -154,7 +154,8 @@ public class Player extends GameObject {
 				moves.add(Move.WALK);
 			}
 			
-			setPosition(getPosition().add(movmentDirection.cpy()));
+			tryMove(movmentDirection.cpy());
+			
 			moveDirections.add(movmentDirection.cpy());
 			currentMoveIndex += 1;
 			shootAngels.add(new Float(shootAngle));
@@ -179,11 +180,19 @@ public class Player extends GameObject {
 		super.update(dt);
 	}
 	
+	private void tryMove(Vector2 delta) {
+		setPosition(getPosition().add(delta));
+		
+		if (Map.collidesWihTile(getHitbox(), getScene()) != null) {
+			setPosition(getPosition().sub(delta));
+		}
+	}
+	
 	public void doMove(int index, float dt) {
 		if(currentMoveIndex != moveDirections.size()-1) {
 			shootAngle = shootAngels.get(currentMoveIndex);
 			
-			setPosition(getPosition().add(moveDirections.get(currentMoveIndex).cpy()));
+			tryMove(moveDirections.get(currentMoveIndex).cpy());
 			
 			if(moveDirections.get(currentMoveIndex).equals(Vector2.Zero)) {
 				currentFrame = 0;
