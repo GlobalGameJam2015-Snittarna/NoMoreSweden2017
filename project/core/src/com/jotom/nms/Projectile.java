@@ -22,7 +22,7 @@ public class Projectile extends GameObject {
 	}
 	
 	public void update(float dt) {
-		setPosition(getPosition().add(moveDirection().cpy()));
+		setPosition(getPosition().add(moveDirection(dt).cpy()));
 		
 		Tile c = Map.collidesWihTile(getHitbox(), getScene());
 		if (c != null && c.getType().isDestructible()) getScene().removeObject(c);
@@ -31,8 +31,8 @@ public class Projectile extends GameObject {
 		super.update(dt);
 	}
 	
-	public Vector2 moveDirection() {
-		return new Vector2((float)Math.cos(angle)*speed, (float)Math.sin(angle)*speed);
+	public Vector2 moveDirection(float dt) {
+		return new Vector2(((float)Math.cos(angle)*speed)*dt, ((float)Math.sin(angle)*speed)*dt);
 	}
 	
 	public int getTag() {
