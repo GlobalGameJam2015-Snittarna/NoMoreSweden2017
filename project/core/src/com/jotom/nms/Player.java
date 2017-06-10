@@ -229,6 +229,10 @@ public class Player extends GameObject {
 		getScene().addObject(new Projectile(new Vector2(getPosition().cpy().x + getSize().x/2, getPosition().cpy().y + getSize().y/2), new Vector2(8, 8), new Animation(new Sprite(AssetManager.getTexture("bullet"))), shootAngle, 500, tag));
 	}
 	
+	public Rectangle getHitbox() {
+		return new Rectangle(getPosition().x+7, getPosition().y+7, 22, 22);
+	}
+	
 	public void draw(SpriteBatch batch) {
 		if(health > 0) {
 			int length = 32*5;
