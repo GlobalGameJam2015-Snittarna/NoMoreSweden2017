@@ -15,7 +15,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 public class GameScene extends Scene {
-	private final int MAX_SCORE = 1000;
+	private final int MAX_SCORE = 150;
 	private final float MAX_ROUND_TIME = 10;
 	
 	public static boolean gameOver;
@@ -80,8 +80,13 @@ public class GameScene extends Scene {
 				winningPlayer = i;
 			}
 		}
+
+		if(gameOver) {
+			if(Gdx.input.isKeyJustPressed(Keys.SPACE)) {
+				resetGame();
+			}
+		}
 		
-		//if(nextRoundDelay > 0) dt = 0;
 		updateRound(dt);
 		
 		super.update(dt);
@@ -148,23 +153,34 @@ public class GameScene extends Scene {
 	}
 	
 	public void resetGame() {
+		for(GameObject g : getObjects()) {
+			removeObject(g);
+		}
+		
+		Map.loadMap(1, this);
+		
+		gameOver = false;
+		
 		Game.setCurrentScene(new StartScreen());
 	}
 	
 	public void drawUi(SpriteBatch uiBatch) {
-		if(gameOver) AssetManager.font.draw(uiBatch, "GAME OVER \nPlayer " + (winningPlayer+1) + " won!", 0, 0);
-		
-		for(int i = 0; i < scores.length; i++)
-			AssetManager.font.draw(uiBatch, "Player " + (i+1) + ": " + scores[i], -145, 70-i*24);
-		if((int)(MAX_ROUND_TIME - roundTime) <= MAX_ROUND_TIME/3) {
-			AssetManager.font.setColor(1, 0, 0, 1);
+		if(gameOver) {
+			AssetManager.font.draw(uiBatch, "GAME OVER \nPlayer " + (winningPlayer+1) + " won!\nPRRESS SPACE TO RESTART", 0, 0);
 		}
-		if (nextRoundDelay <= 0) AssetManager.font.draw(uiBatch, "TIME LEFT: " + (int)(MAX_ROUND_TIME - roundTime), -32+8, 0);
-		if(nextRoundDelay > 0 && nextRoundDelay < 100000) {
-			uiBatch.draw(new Sprite(AssetManager.getTexture("roundover")), -100, -50);
-		}
-		if((int)(MAX_ROUND_TIME - roundTime) <= MAX_ROUND_TIME/3) {
-			AssetManager.font.setColor(1, 1, 1, 1);
+		else {
+			for(int i = 0; i < scores.length; i++)
+				AssetManager.font.draw(uiBatch, "Player " + (i+1) + ": " + scores[i], -145, 70-i*24);
+			if((int)(MAX_ROUND_TIME - roundTime) <= MAX_ROUND_TIME/3) {
+				AssetManager.font.setColor(1, 0, 0, 1);
+			}
+			if (nextRoundDelay <= 0) AssetManager.font.draw(uiBatch, "TIME LEFT: " + (int)(MAX_ROUND_TIME - roundTime), -32+8, 0);
+			if(nextRoundDelay > 0 && nextRoundDelay < 100000) {
+				uiBatch.draw(new Sprite(AssetManager.getTexture("roundover")), -100, -50);
+			}
+			if((int)(MAX_ROUND_TIME - roundTime) <= MAX_ROUND_TIME/3) {
+				AssetManager.font.setColor(1, 1, 1, 1);
+			}
 		}
 		super.drawUi(uiBatch);
 	}
