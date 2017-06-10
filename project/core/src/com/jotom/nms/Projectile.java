@@ -1,5 +1,8 @@
 package com.jotom.nms;
 
+import java.util.Random;
+
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 
 public class Projectile extends GameObject {
@@ -14,6 +17,8 @@ public class Projectile extends GameObject {
 	private Types type;
 	
 	private boolean byCurrentPlayer;
+	
+	private Random random;
 	
 	public boolean isByCurrentPlayer() {
 		return byCurrentPlayer;
@@ -34,13 +39,24 @@ public class Projectile extends GameObject {
 		opacity = 1f;
 		
 		this.type = type;
+		
+		random = new Random();
 	}
 	
 	public void update(float dt) {
 		setPosition(getPosition().add(moveDirection(dt).cpy()));
 		
 		Tile c = Map.collidesWihTile(getHitbox(), getScene());
-		if (c != null && c.getType().isDestructible()) getScene().removeObject(c);
+		if (c != null && c.getType().isDestructible()) { 
+			getScene().removeObject(c);
+			if (c.getType().getMarker() == 'd') {
+				int np = 10;
+				for (int i = 0; i < np; i++) {
+					float angle = i *360 / np + random.nextFloat() * 10;
+					getScene().addObject(new Particle(getPosition(), new Vector2((float)Math.cos(angle), (float)Math.sin(angle)).scl(100), Color.BROWN));
+				}
+			}
+		}
 		if (c != null && !c.getType().isWalkable()) getScene().removeObject(this);
 		
 		if(type == Types.DEACCELERTING) {
