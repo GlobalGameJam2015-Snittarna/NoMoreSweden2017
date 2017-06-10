@@ -61,6 +61,9 @@ public class Player extends GameObject {
 	private int leftKey, rightKey, downKey, upKey, shootKey;
 	
 	boolean notMoving;
+	boolean canNotAim;
+	
+	private float controllerShootAngle;
 	
 	public Player(Vector2 position, Vector2 size, Animation sprite, int tag) {
 		super(position, size, sprite);
@@ -113,12 +116,15 @@ public class Player extends GameObject {
 				
 				moveAngle = (float)Math.atan2(-axisValueY, axisValueX);
 				
-				float axisValueRightX = controller.getAxis(1);
-				float axisValueRightY = controller.getAxis(0);
+				float axisValueRightX = controller.getAxis(3);
+				float axisValueRightY = controller.getAxis(2);
 				
-				if(axisValueX < 0.1f && axisValueX > -0.1f) axisValueX = 0;
-				if(axisValueY < 0.1f && axisValueY > -0.1f) axisValueY = 0;
+				if(axisValueRightX < 0.1f && axisValueRightX > -0.1f) axisValueRightX = 0;
+				if(axisValueRightY < 0.1f && axisValueRightY > -0.1f) axisValueRightY = 0;
 				
+				canNotAim = axisValueRightX == 0 && axisValueRightY == 0;
+				
+				controllerShootAngle = (float)Math.atan2(-axisValueRightY, axisValueRightX);
 			}
 			index++;
 		}
@@ -202,6 +208,8 @@ public class Player extends GameObject {
 			} else {
 				if(!notMoving) movmentDirection = new Vector2(((float)Math.cos(moveAngle)*speed)*dt, ((float)Math.sin(moveAngle)*speed)*dt);
 				else movmentDirection = Vector2.Zero;
+				
+				if(!canNotAim) shootAngle = controllerShootAngle;
 			}
 			
 			if(shootDelay > 0) 
@@ -210,7 +218,7 @@ public class Player extends GameObject {
 				shootDelay = 0;
 			}
 			
-			if(Gdx.input.isKeyPressed(shootKey) && shootDelay == 0) {
+			if((Gdx.input.isKeyPressed(shootKey) || !canNotAim) && shootDelay == 0) {
 				shoot();
 				shootDelay = 1;
 				moves.add(Move.SHOOT);
