@@ -79,6 +79,8 @@ public class Player extends GameObject {
 		upKey = (tag == 0) ? Keys.UP : Keys.W;
 		downKey = (tag == 0) ? Keys.DOWN : Keys.S;
 		shootKey = (tag == 0) ? Keys.M : Keys.Q;
+		
+		shootAngle = random.nextFloat() * 2 * (float)Math.PI;
 	}
 	
 	public void update(float dt) {

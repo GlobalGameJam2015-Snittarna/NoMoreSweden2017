@@ -97,8 +97,8 @@ public class GameScene extends Scene {
 			}
 		}
 		
-		addObject(new Player(new Vector2(64, 64+random.nextInt(200)), new Vector2(32, 32), new Animation(new Sprite(AssetManager.getTexture("player1"))), 0));
-		addObject(new Player(new Vector2(400, 64+random.nextInt(200)), new Vector2(32, 32), new Animation(new Sprite(AssetManager.getTexture("player2"))), 1));
+		addObject(new Player(Map.firstTile('s', this).getPosition().add(Utils.randomVector(32, random)), new Vector2(32, 32), new Animation(new Sprite(AssetManager.getTexture("player1"))), 0));
+		addObject(new Player(Map.firstTile('S', this).getPosition().add(Utils.randomVector(32, random)), new Vector2(32, 32), new Animation(new Sprite(AssetManager.getTexture("player2"))), 1));
 		
 		Map.loadMap(1, this);
 	}
