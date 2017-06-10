@@ -140,9 +140,15 @@ public class GameScene extends Scene {
 		
 		for(int i = 0; i < scores.length; i++)
 			AssetManager.font.draw(uiBatch, "Player " + (i+1) + ": " + scores[i], -145, 70-i*24);
+		if((int)(MAX_ROUND_TIME - roundTime) <= MAX_ROUND_TIME/3) {
+			AssetManager.font.setColor(1, 0, 0, 1);
+		}
 		AssetManager.font.draw(uiBatch, "TIME LEFT: " + (int)(MAX_ROUND_TIME - roundTime), -32+8, 0);
 		if(nextRoundDelay > 0 && nextRoundDelay < 100000) {
 			uiBatch.draw(new Sprite(AssetManager.getTexture("roundover")), -100, -50);
+		}
+		if((int)(MAX_ROUND_TIME - roundTime) <= MAX_ROUND_TIME/3) {
+			AssetManager.font.setColor(1, 1, 1, 1);
 		}
 		super.drawUi(uiBatch);
 	}

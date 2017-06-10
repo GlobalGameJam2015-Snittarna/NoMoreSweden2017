@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
 public class Player extends GameObject {
@@ -43,6 +44,8 @@ public class Player extends GameObject {
 	
 	private float speed;
 	private float shootAngle;
+	private float showArrowTime;
+	private float showArrowOpacity;
 	private ArrayList<Float> shootAngels;
 	
 	private WeaponTypes weapon;
@@ -81,6 +84,9 @@ public class Player extends GameObject {
 		shootKey = (tag == 0) ? Keys.M : Keys.Q;
 		
 		shootAngle = random.nextFloat() * 2 * (float)Math.PI;
+		
+		showArrowTime = 5;
+		showArrowOpacity = 1;
 	}
 	
 	public void update(float dt) {
@@ -116,8 +122,16 @@ public class Player extends GameObject {
 			
 			getSprite().setColor(1, lerp(getSprite().getColor().g, 1, 3f*dt), lerp(getSprite().getColor().b, 1, 3f*dt), 1);
 		}
-				
+		
+		showArrowTime -= 1*dt;
+		
 		if(isCurrentPlayer && health > 0) {
+			if(showArrowTime <= 1) {
+				showArrowOpacity -= 1*dt;
+				showArrowOpacity  = MathUtils.clamp(showArrowOpacity, 0, 1);
+			}
+			
+			showArrowTime -= 1*dt;
 			if(Gdx.input.isKeyPressed(leftKey)) {
 				shootAngle += 5 * dt;
 			}
@@ -246,6 +260,13 @@ public class Player extends GameObject {
 				a.setColor((tag == 0) ? 1 : 0, 0, (tag == 1) ? 1 : 0, 1 - (t/((float)length)));
 				a.setPosition(getPosition().cpy().x + ((float)Math.cos(shootAngle)*i) + getSize().x/2, getPosition().cpy().y+ ((float)Math.sin(shootAngle)*i) + getSize().y/2);
 			
+				a.draw(batch);
+			}
+			
+			if(isCurrentPlayer) {
+				Animation a = new Animation(new Sprite(AssetManager.getTexture("you")));
+				a.setColor((tag == 0) ? 1 : 0, 0, (tag == 1) ? 1 : 0, showArrowOpacity);
+				a.setPosition(getPosition().x-16, getPosition().y+40);
 				a.draw(batch);
 			}
 		}

@@ -19,3 +19,4 @@ player2step4,133,67,32,32
 bloodSplatter1,1,133,32,32
 bloodSplatter2,34,133,32,32
 roundover,182,210,197,99
+you,199,34,48,42
