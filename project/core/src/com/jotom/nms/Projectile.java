@@ -47,6 +47,8 @@ public class Projectile extends GameObject {
 		setPosition(getPosition().add(moveDirection(dt).cpy()));
 		
 		Tile c = Map.collidesWihTile(getHitbox(), getScene());
+		if(c != null && type == Types.ROCKET) 
+			getScene().addObject(new Explosion(new Vector2(getPosition().x-32, getPosition().y-32)));
 		if (c != null && c.getType().isDestructible()) { 
 			getScene().removeObject(c);
 			if (c.getType().getMarker() == 'd') {
