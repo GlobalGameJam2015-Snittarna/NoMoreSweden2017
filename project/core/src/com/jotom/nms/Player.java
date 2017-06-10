@@ -105,21 +105,11 @@ public class Player extends GameObject {
 							getScene().getCamera().shake(1 + (isCurrentPlayer ? 3 : 0) + (((Projectile)g).isByCurrentPlayer() ? 3 : 0));
 						}
 						getScene().removeObject(g);
+						getScene().addObject(new BloodSplatter(getPosition()));
 					}
 				}
 			}
 		} else {
-			if(!hasGivenScore && false) {
-				for(GameObject g : getScene().getObjects()) {
-					if(g instanceof Player) {
-						if(((Player) g).getTag() != tag && ((Player) g).isCurrentPlayer && !hasGivenScore) {
-							((GameScene) getScene()).raiseScore(((Player) g).getTag(), isCurrentPlayer ? 10 : 1);
-							hasGivenScore = true;
-						}
-					}
-				}
-			}
-			
 			getSprite().setColor(1, lerp(getSprite().getColor().g, 1, 3f*dt), lerp(getSprite().getColor().b, 1, 3f*dt), 1);
 		}
 		

@@ -20,13 +20,13 @@ public class BloodSplatter extends GameObject {
 		
 		angle = random.nextInt(180);
 		
-		speed = 9+random.nextInt(3);
+		speed = (9+random.nextInt(3))*1f;;
 	}
 	
 	public void update(float dt) {
 		if(!hasHitGround) {
 			distanceToGround += speed * dt;
-			speed -= 6*dt;
+			speed -= 600*dt;
 			setPosition(getPosition().add(new Vector2(new Vector2((float)Math.cos(angle*0.0174532925)*speed, (float)Math.sin(angle*0.0174532925)*speed))));
 		}
 		

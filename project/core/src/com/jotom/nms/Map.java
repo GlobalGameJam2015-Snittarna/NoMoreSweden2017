@@ -78,7 +78,10 @@ public class Map {
 			int x = 0;
 			for (char c : line.toCharArray()) {
 				TileType t = findTileType(c);
-				if (t != null) scene.addObject(new Tile(new Vector2(x, y).scl(TILESIZE), t));
+				if (t != null) {
+					scene.addObject(new Tile(new Vector2(x, y).scl(TILESIZE), t));
+					if (t.isDestructible()) scene.addObject(new Tile(new Vector2(x, y).scl(TILESIZE), findTileType(' ')));
+				}
 				else System.out.println("couldnt find tiletype " + c);
 				x++;
 			}

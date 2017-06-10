@@ -157,7 +157,13 @@ public class GameScene extends Scene {
 
 			@Override
 			public int compare(GameObject o1, GameObject o2) {
-				if (o1 instanceof Tile) return -1;
+				if (o1 instanceof Tile && o2 instanceof Tile) {
+					if (((Tile)o1).getType().isWalkable() == ((Tile)o2).getType().isWalkable()) return 0;
+					else if (((Tile)o1).getType().isWalkable()) return -1;
+					else if (((Tile)o2).getType().isWalkable()) return 1;
+					else return 0;
+				}
+				else if (o1 instanceof Tile) return -1;
 				else if (o2 instanceof Tile) return 1;
 				else return 0;
 			}
