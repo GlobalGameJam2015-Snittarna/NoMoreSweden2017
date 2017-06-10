@@ -21,3 +21,4 @@ bloodSplatter1,1,133,32,32
 bloodSplatter2,34,133,32,32
 roundover,182,210,197,99
 you,199,34,48,42
+spawn,100,1,32,32
