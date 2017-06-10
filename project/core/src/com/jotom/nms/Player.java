@@ -96,7 +96,7 @@ public class Player extends GameObject {
 						if(health <= 0) {
 							setSprite(new Animation(new Sprite(AssetManager.getTexture("dead" + (tag+1)))));
 							getSprite().setColor(1, 0, 0, 1);
-							((GameScene)getScene()).raiseScore(getTag() == 1 ? 0 : 1, isCurrentPlayer ? 10 : 1);
+							((GameScene)getScene()).raiseScore(getTag() == 1 ? 0 : 1, (isCurrentPlayer ? 10 : 1) * (((Projectile)g).isByCurrentPlayer() ? 2 : 1));
 						}
 						getScene().removeObject(g);
 					}
@@ -229,7 +229,7 @@ public class Player extends GameObject {
 	}
 	
 	public void shoot() {
-		getScene().addObject(new Projectile(new Vector2(getPosition().cpy().x + getSize().x/2, getPosition().cpy().y + getSize().y/2), new Vector2(8, 8), new Animation(new Sprite(AssetManager.getTexture("bullet"))), shootAngle, 500, tag));
+		getScene().addObject(new Projectile(new Vector2(getPosition().cpy().x + getSize().x/2, getPosition().cpy().y + getSize().y/2), new Vector2(8, 8), new Animation(new Sprite(AssetManager.getTexture("bullet"))), shootAngle, 500, tag, isCurrentPlayer));
 	}
 	
 	public Rectangle getHitbox() {

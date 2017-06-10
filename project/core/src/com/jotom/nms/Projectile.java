@@ -10,13 +10,21 @@ public class Projectile extends GameObject {
 	
 	private int tag;
 	
-	public Projectile(Vector2 position, Vector2 size, Animation sprite, float angle, float speed, int tag) {
+	private boolean byCurrentPlayer;
+	
+	public boolean isByCurrentPlayer() {
+		return byCurrentPlayer;
+	}
+
+	public Projectile(Vector2 position, Vector2 size, Animation sprite, float angle, float speed, int tag, boolean byCurrentPlayer) {
 		super(position, size, sprite);
 		setOriginCenter();
 		this.angle = angle;
 		this.speed = speed;
 		
 		this.tag = tag;
+		
+		this.byCurrentPlayer = byCurrentPlayer;
 		
 		setRotation(angle*57.2957795f);
 	}
