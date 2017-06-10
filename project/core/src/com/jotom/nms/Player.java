@@ -262,6 +262,10 @@ public class Player extends GameObject {
 		setSprite(new Animation(new Sprite(AssetManager.getTexture("player" + (tag+1)))));
 	}
 	
+	public boolean isDead() {
+		return health <= 0;
+	}
+	
 	public int getTag() {
 		return tag;
 	}
