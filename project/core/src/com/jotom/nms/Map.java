@@ -42,6 +42,21 @@ public class Map {
 		return null;
 	}
 	
+	/**
+	 * returns the first tile with the given marker in the scene, or null
+	 * @param marker
+	 * @param scene
+	 */
+	public static Tile firstTile(char marker, Scene scene) {
+		for (GameObject g : scene.getObjects()) {
+			if (g instanceof Tile) {
+				Tile t = (Tile)g;
+				if (t.getType().getMarker() == marker) return t;
+			}
+		}
+		return null;
+	}
+	
 	/** 
 	 * loads tile locations and adds the tiles to a scene
 	 * @param map
