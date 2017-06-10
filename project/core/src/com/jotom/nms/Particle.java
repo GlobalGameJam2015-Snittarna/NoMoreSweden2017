@@ -11,7 +11,7 @@ public class Particle extends GameObject {
 	private float lifetime = .5f;
 	
 	public Particle(Vector2 position, Vector2 velocity, Color color) {
-		super(position, new Vector2(1, 1), new Animation(new Sprite(AssetManager.getTexture("unit"))));
+		super(position, new Vector2(1, 1).scl(10), new Animation(new Sprite(AssetManager.getTexture("plot"))));
 		this.velocity = velocity;
 		this.color = color;
 		getSprite().setColor(color);
@@ -23,6 +23,7 @@ public class Particle extends GameObject {
 		lifetime -= dt;
 		if (lifetime <= 0) {
 			getScene().removeObject(this);
+			System.out.println("particle died");
 		}
 	}
 }

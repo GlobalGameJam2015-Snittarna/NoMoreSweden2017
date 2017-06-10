@@ -5,6 +5,7 @@ import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
@@ -17,6 +18,7 @@ public class Player extends GameObject {
 	private final int START_HEALTH = 1;
 	
 	public boolean isCurrentPlayer;
+	public boolean roundOver;
 	
 	private boolean cantDoNextMove;
 	private boolean hasGivenScore;
@@ -93,9 +95,10 @@ public class Player extends GameObject {
 	}
 	
 	public void update(float dt) {
+		if (roundOver) dt = 0;
+		
 		setRotation(shootAngle*57.2957795f);
-		
-		
+				
 		if(health > 0) {
 			for(GameObject g : getScene().getObjects()) {
 				if(g instanceof Projectile) {
@@ -109,6 +112,11 @@ public class Player extends GameObject {
 						}
 						getScene().removeObject(g);
 						getScene().addObject(new BloodSplatter(getPosition()));
+						int np = 10;
+						for (int i = 0; i < np; i++) {
+							float angle = i *360 / np + random.nextFloat() * 10;
+							getScene().addObject(new Particle(getPosition(), new Vector2((float)Math.cos(angle), (float)Math.sin(angle)).scl(100), Color.RED));
+						}
 					}
 				}
 			}
@@ -171,7 +179,7 @@ public class Player extends GameObject {
 			shootAngels.add(new Float(shootAngle));
 		}
 		
-		if(!isCurrentPlayer) {
+		if(!isCurrentPlayer && !roundOver) {
 			if(!cantDoNextMove && currentMoveIndex != moveDirections.size()-1 && health > 0) {
 				doMove(currentMoveIndex, dt);
 				currentMoveIndex++;

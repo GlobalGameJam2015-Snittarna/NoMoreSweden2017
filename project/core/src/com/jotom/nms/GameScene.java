@@ -77,7 +77,7 @@ public class GameScene extends Scene {
 			}
 		}
 		
-		if(nextRoundDelay > 0) dt = 0;
+		//if(nextRoundDelay > 0) dt = 0;
 		updateRound(dt);
 		
 		super.update(dt);
@@ -99,6 +99,12 @@ public class GameScene extends Scene {
 		
 		if(roundTime >= MAX_ROUND_TIME || ((allPlayersDead[0] || allPlayersDead[1]) && !firstRound) || (firstRound && (scores[0] != 0 || scores[1] != 0))) {
 			nextRoundDelay += 1;
+			
+			for (GameObject g : getObjects()) {
+				if (g instanceof Player) {
+					((Player)g).roundOver = true;
+				}
+			}
 			
 			if(nextRoundDelay > 64*4) {
 				dt = 1;
@@ -142,7 +148,7 @@ public class GameScene extends Scene {
 		if((int)(MAX_ROUND_TIME - roundTime) <= MAX_ROUND_TIME/3) {
 			AssetManager.font.setColor(1, 0, 0, 1);
 		}
-		AssetManager.font.draw(uiBatch, "TIME LEFT: " + (int)(MAX_ROUND_TIME - roundTime), -32+8, 0);
+		if (nextRoundDelay <= 0) AssetManager.font.draw(uiBatch, "TIME LEFT: " + (int)(MAX_ROUND_TIME - roundTime), -32+8, 0);
 		if(nextRoundDelay > 0 && nextRoundDelay < 100000) {
 			uiBatch.draw(new Sprite(AssetManager.getTexture("roundover")), -100, -50);
 		}

@@ -8,37 +8,35 @@ import com.badlogic.gdx.math.Vector2;
 public class BloodSplatter extends GameObject {
 	boolean hasHitGround;
 	
-	private float distanceToGround;
+	private float height;
 	private float speed;
-	private float angle;
+	private Vector2 delta;
 	
 	Random random = new Random();
 	
 	public BloodSplatter(Vector2 position) {
 		super(position, new Vector2(32, 32), new Animation(new Sprite(AssetManager.getTexture("bloodSplatter1"))));
-		distanceToGround = 1f;
 		
-		angle = random.nextInt(180);
-		
-		speed = (9+random.nextInt(3))*1f;;
+		speed = 20;
+		float angle = random.nextFloat() * 180;
+		delta = new Vector2((float)Math.cos(angle), (float)Math.sin(angle));
 	}
 	
 	public void update(float dt) {
-		if(!hasHitGround) {
-			distanceToGround += speed * dt;
-			speed -= 600*dt;
-			setPosition(getPosition().add(new Vector2(new Vector2((float)Math.cos(angle*0.0174532925)*speed, (float)Math.sin(angle*0.0174532925)*speed))));
+		if (!hasHitGround) {
+			speed -= 40 * dt;
+			height += speed * dt;
+			
+			if (height <= 0) {
+				hasHitGround = true;
+				setSprite(AssetManager.getTexture("bloodSplatter2"));
+			}
+			
+			setPosition(getPosition().add(delta));
 		}
 		
-		setScale((distanceToGround/7) + 1);
+		setScale(1 + height / 7);
 		
-		if(distanceToGround <= 0.01f) {
-			setSprite(new Animation(new Sprite(AssetManager.getTexture("bloodSplatter2"))));
-			speed = 0;
-			distanceToGround = 0;
-			hasHitGround = true;
-		}
-
 		super.update(dt);
 	}
 }
