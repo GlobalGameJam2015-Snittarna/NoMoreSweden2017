@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 public class Player extends GameObject {
-	private final float ORGINAL_SPEED = 50;
+	private final float ORGINAL_SPEED = 150;
 	private final float MAX_ANIMATION_COUNT = 0.2f;
 	
 	private final int START_HEALTH = 1;
@@ -181,10 +181,27 @@ public class Player extends GameObject {
 	}
 	
 	private void tryMove(Vector2 delta) {
-		setPosition(getPosition().add(delta));
+		Vector2 oldPos = getPosition().cpy();
+		final int steps = 5;
 		
-		if (Map.collidesWihTile(getHitbox(), getScene()) != null) {
-			setPosition(getPosition().sub(delta));
+		for (int step = 0; step < steps; step++) {
+			setPosition(oldPos.cpy().add(delta.x * step / steps, 0));
+			Tile t = Map.collidesWihTile(getHitbox(), getScene());
+			if (t != null && ! t.getType().isWalkable()) {
+				setPosition(oldPos.cpy().add(delta.x * (step - 1) / steps, 0));	
+				break;
+			}
+		}
+		
+		oldPos = getPosition().cpy();
+		
+		for (int step = 0; step < steps; step++) {
+			setPosition(oldPos.cpy().add(0, delta.y * step / steps));
+			Tile t = Map.collidesWihTile(getHitbox(), getScene());
+			if (t != null && ! t.getType().isWalkable()) {
+				setPosition(oldPos.cpy().add(0, delta.y * (step - 1) / steps));	
+				break;
+			}
 		}
 	}
 	
