@@ -60,8 +60,6 @@ public class GameScene extends Scene {
 		}*/
 	}
 	
-	
-	
 	public void update(float dt) {
 		if(Gdx.input.isKeyJustPressed(Keys.ENTER)) {
 			resetRound();
