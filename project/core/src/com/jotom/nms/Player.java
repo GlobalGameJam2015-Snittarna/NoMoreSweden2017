@@ -87,6 +87,9 @@ public class Player extends GameObject {
 		
 		showArrowTime = 5;
 		showArrowOpacity = 1;
+		
+		weapon = WeaponTypes.PISTOL;
+		giveRandomWeapon();
 	}
 	
 	public void update(float dt) {
@@ -242,8 +245,31 @@ public class Player extends GameObject {
 		}
 	}
 	
+	public void giveRandomWeapon() {
+		int id = random.nextInt(4);
+		
+		if(id == 0) weapon = WeaponTypes.PISTOL;
+		if(id == 1) weapon = WeaponTypes.MACHINE_GUN;
+		if(id == 2) weapon = WeaponTypes.SPREADGUN;
+	}
+	
 	public void shoot() {
-		getScene().addObject(new Projectile(new Vector2(getPosition().cpy().x + getSize().x/2, getPosition().cpy().y + getSize().y/2), new Vector2(8, 8), new Animation(new Sprite(AssetManager.getTexture("bullet"))), shootAngle, 500, tag, isCurrentPlayer));
+		if(weapon == WeaponTypes.PISTOL) {
+			getScene().addObject(new Projectile(new Vector2(getPosition().cpy().x + getSize().x/2, getPosition().cpy().y + getSize().y/2), new Vector2(8, 8), new Animation(new Sprite(AssetManager.getTexture("bullet"))), shootAngle, 500, tag, isCurrentPlayer));
+			maxShootDelay = 64; 
+		}
+		
+		if(weapon == WeaponTypes.MACHINE_GUN) {
+			getScene().addObject(new Projectile(new Vector2(getPosition().cpy().x + getSize().x/2, getPosition().cpy().y + getSize().y/2), new Vector2(8, 8), new Animation(new Sprite(AssetManager.getTexture("bullet"))), shootAngle, 500, tag, isCurrentPlayer));
+			maxShootDelay = 64/4; 
+		}
+		
+		if(weapon == WeaponTypes.SPREADGUN) {
+			for(int i = -1; i < 2; i++) {
+				getScene().addObject(new Projectile(new Vector2(getPosition().cpy().x + getSize().x/2, getPosition().cpy().y + getSize().y/2), new Vector2(8, 8), new Animation(new Sprite(AssetManager.getTexture("bullet"))), shootAngle+((float)Math.PI/8)*i, 500, tag, isCurrentPlayer));
+			}
+			maxShootDelay = 64; 
+		}
 	}
 	
 	public Rectangle getHitbox() {
