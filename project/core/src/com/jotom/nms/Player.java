@@ -314,6 +314,8 @@ public class Player extends GameObject {
 		health = START_HEALTH;
 		speed = ORGINAL_SPEED;
 		
+		roundOver = false;
+		
 		setSprite(new Animation(new Sprite(AssetManager.getTexture("player" + (tag+1)))));
 	}
 	
