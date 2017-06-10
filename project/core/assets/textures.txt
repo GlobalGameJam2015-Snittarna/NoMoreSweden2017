@@ -1,5 +1,6 @@
 destructible-tile,34,1,32,32
 indestructible-tile,1,1,32,32
+grass-tile,67,1,32,32
 player1,1,34,32,32
 player2,1,67,32,32
 dead1,100,100,32,32

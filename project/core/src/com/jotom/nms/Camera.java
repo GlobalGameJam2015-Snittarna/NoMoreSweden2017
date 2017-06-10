@@ -60,7 +60,6 @@ public class Camera extends OrthographicCamera {
 			this.setPosition(oldPosition.x + (r.nextFloat() - .5f) * shake * GAIN, oldPosition.y + (r.nextFloat() - .5f) * shake * GAIN);
 		} else if (oldPosition != null) {
 			this.setPosition(oldPosition.x, oldPosition.y);
-			System.out.println("shake done");
 		}
 		shake -= dt * (shake * 2 * shake + .1f);
 		if (shake < 0) shake = 0;

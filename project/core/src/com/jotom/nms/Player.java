@@ -92,7 +92,6 @@ public class Player extends GameObject {
 	public void update(float dt) {
 		setRotation(shootAngle*57.2957795f);
 		
-		if(moveDirections.size() > 1 && Gdx.input.isKeyPressed(Keys.SPACE)) reset();
 		
 		if(health > 0) {
 			for(GameObject g : getScene().getObjects()) {

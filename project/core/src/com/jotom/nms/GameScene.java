@@ -69,10 +69,6 @@ public class GameScene extends Scene {
 	
 	public void update(float dt) {
 		getCamera().update(dt);
-		
-		if(Gdx.input.isKeyJustPressed(Keys.ENTER)) {
-			resetRound();
-		}
 
 		for(int i = 0; i < scores.length; i++) {
 			if(scores[i] >= MAX_SCORE) {
@@ -80,6 +76,7 @@ public class GameScene extends Scene {
 				winningPlayer = i;
 			}
 		}
+		
 		if(nextRoundDelay > 0) dt = 0;
 		updateRound(dt);
 		
@@ -156,6 +153,16 @@ public class GameScene extends Scene {
 	}
 	
 	public void drawGame(SpriteBatch batch) {
+		getObjects().sort(new Comparator<GameObject>() {
+
+			@Override
+			public int compare(GameObject o1, GameObject o2) {
+				if (o1 instanceof Tile) return -1;
+				else if (o2 instanceof Tile) return 1;
+				else return 0;
+			}
+		});
+		
 		super.drawGame(batch);
 	}
 	
