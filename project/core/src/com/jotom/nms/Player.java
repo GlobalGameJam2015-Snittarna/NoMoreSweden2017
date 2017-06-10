@@ -23,7 +23,7 @@ public class Player extends GameObject {
 	private boolean cantDoNextMove;
 	private boolean hasGivenScore;
 	
-	public enum WeaponTypes {PISTOL, SPREADGUN, MACHINE_GUN};
+	public enum WeaponTypes {PISTOL, SPREADGUN, MACHINE_GUN, ROCKET_LAUNCHER};
 	public enum Move {SHOOT, WALK};
 	
 	private Vector2 startPoint;
@@ -103,6 +103,7 @@ public class Player extends GameObject {
 			for(GameObject g : getScene().getObjects()) {
 				if(g instanceof Projectile) {
 					if(g.getHitbox().collision(getHitbox()) && ((Projectile) g).getTag() != tag) {
+						if(((Projectile) g).getType() == Projectile.Types.ROCKET) getScene().addObject(new Explosion(new Vector2(getPosition().x+16, getPosition().y)));
 						health -= 1;
 						if(health <= 0) {
 							setSprite(new Animation(new Sprite(AssetManager.getTexture("dead" + (tag+1)))));
@@ -249,6 +250,7 @@ public class Player extends GameObject {
 		if(id == 0) weapon = WeaponTypes.PISTOL;
 		if(id == 1) weapon = WeaponTypes.MACHINE_GUN;
 		if(id == 2) weapon = WeaponTypes.SPREADGUN;
+		if(id == 3) weapon = WeaponTypes.ROCKET_LAUNCHER;
 	}
 	
 	public void shoot() {
@@ -266,6 +268,11 @@ public class Player extends GameObject {
 			for(int i = -1; i < 2; i++) {
 				getScene().addObject(new Projectile(new Vector2(getPosition().cpy().x + getSize().x/2, getPosition().cpy().y + getSize().y/2), new Vector2(8, 8), new Animation(new Sprite(AssetManager.getTexture("bullet"))), shootAngle+((float)Math.PI/8)*i, 500, tag, isCurrentPlayer, Projectile.Types.DEACCELERTING));
 			}
+			maxShootDelay = 64; 
+		}
+		
+		if(weapon == WeaponTypes.ROCKET_LAUNCHER) {
+			getScene().addObject(new Projectile(new Vector2(getPosition().cpy().x + getSize().x/2, getPosition().cpy().y + getSize().y/2), new Vector2(12, 12), new Animation(new Sprite(AssetManager.getTexture("rocket"))), shootAngle, 500, tag, isCurrentPlayer, Projectile.Types.ROCKET));
 			maxShootDelay = 64; 
 		}
 	}
