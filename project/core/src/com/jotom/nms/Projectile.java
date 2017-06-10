@@ -52,6 +52,10 @@ public class Projectile extends GameObject {
 		super.update(dt);
 	}
 	
+	public Types getType() {
+		return type;
+	}
+	
 	public Vector2 moveDirection(float dt) {
 		return new Vector2(((float)Math.cos(angle)*speed)*dt, ((float)Math.sin(angle)*speed)*dt);
 	}

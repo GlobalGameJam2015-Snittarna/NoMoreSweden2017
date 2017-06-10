@@ -69,7 +69,11 @@ public class GameScene extends Scene {
 	
 	public void update(float dt) {
 		getCamera().update(dt);
-
+		
+		if(Gdx.input.isKeyPressed(Keys.G)) {
+			addObject(new Explosion(new Vector2(0, 0)));
+		}
+		
 		for(int i = 0; i < scores.length; i++) {
 			if(scores[i] >= MAX_SCORE) {
 				gameOver = true;
