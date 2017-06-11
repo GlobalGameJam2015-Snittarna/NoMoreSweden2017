@@ -49,8 +49,15 @@ public class Projectile extends GameObject {
 		setPosition(getPosition().add(moveDirection(dt).cpy()));
 		
 		Tile c = Map.collidesWihTile(getHitbox(), getScene());
-		if(c != null && type == Types.ROCKET) 
+		if(c != null && type == Types.ROCKET) {
 			getScene().addObject(new Explosion(new Vector2(getPosition().x-32, getPosition().y-32)));
+			int np = 100;
+			for (int i = 0; i < np; i++) {
+				float angle = i *360 / np + random.nextFloat() * 10;
+				getScene().addObject(new Particle(getPosition(), new Vector2((float)Math.cos(angle), (float)Math.sin(angle)).scl(100 + random.nextFloat() * 200), Color.GRAY, 3));
+			}
+			AssetManager.getSound("death").play();
+		}
 		if (c != null && c.getType().isDestructible()) { 
 			getScene().removeObject(c);
 			AssetManager.getSound("shot").play();
@@ -58,11 +65,19 @@ public class Projectile extends GameObject {
 				int np = 10;
 				for (int i = 0; i < np; i++) {
 					float angle = i *360 / np + random.nextFloat() * 10;
-					getScene().addObject(new Particle(getPosition(), new Vector2((float)Math.cos(angle), (float)Math.sin(angle)).scl(50 + random.nextFloat() * 100), Color.BROWN));
+					getScene().addObject(new Particle(getPosition(), new Vector2((float)Math.cos(angle), (float)Math.sin(angle)).scl(50 + random.nextFloat() * 100), Color.BROWN, 8));
 				}
 			}
 		}
-		if (c != null && !c.getType().isWalkable()) getScene().removeObject(this);
+		if (c != null && !c.getType().isWalkable()) {
+			getScene().removeObject(this);
+			int np = 5;
+			for (int i = 0; i < np; i++) {
+				float angle = i *360 / np + random.nextFloat() * 10;
+				getScene().addObject(new Particle(getPosition(), new Vector2((float)Math.cos(angle), (float)Math.sin(angle)).scl(50 + random.nextFloat() * 100), Color.YELLOW, 2));
+			}
+			
+		}
 		
 		if(type == Types.DEACCELERTING) {
 			speed = lerp(speed, 0, 2*dt);

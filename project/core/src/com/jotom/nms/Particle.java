@@ -9,12 +9,14 @@ public class Particle extends GameObject {
 	private Vector2 velocity;
 	private Color color;
 	private float lifetime = .5f;
+	private float size;
 	
-	public Particle(Vector2 position, Vector2 velocity, Color color) {
-		super(position, new Vector2(1, 1).scl(10), new Animation(new Sprite(AssetManager.getTexture("plot"))));
+	public Particle(Vector2 position, Vector2 velocity, Color color, float size) {
+		super(position, new Vector2(1, 1).scl(size), new Animation(new Sprite(AssetManager.getTexture("plot"))));
 		this.velocity = velocity;
 		this.color = color;
 		getSprite().setColor(color);
+		this.size = size;
 	}
 	
 	public void update(float dt) {
@@ -25,5 +27,7 @@ public class Particle extends GameObject {
 			getScene().removeObject(this);
 			System.out.println("particle died");
 		}
+		
+		setScale(size * lifetime / .5f);
 	}
 }
