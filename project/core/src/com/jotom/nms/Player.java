@@ -229,7 +229,7 @@ public class Player extends GameObject {
 				shootDelay = 0;
 			}
 			
-			if((Gdx.input.isKeyPressed(shootKey) || !canNotAim) && shootDelay == 0) {
+			if((Gdx.input.isKeyPressed(shootKey) || (!canNotAim && tag == 0)) && shootDelay == 0) {
 				shoot();
 				shootDelay = 1;
 				moves.add(Move.SHOOT);
@@ -362,7 +362,7 @@ public class Player extends GameObject {
 			int length = 32*5;
 			for(int i = 0; i < length; i++) {
 				//förmodligen ingen som kommer märka men så kan det gå
-				if(((GameScene) getScene()).pointIsOnTile(new Vector2(getPosition().cpy().x + ((float)Math.cos(shootAngle)*i) + getSize().x/2, getPosition().cpy().y+ ((float)Math.sin(shootAngle)*i) + getSize().y/2))) {
+				if(i % 4 == 0 && ((GameScene) getScene()).pointIsOnTile(new Vector2(getPosition().cpy().x + ((float)Math.cos(shootAngle)*i) + getSize().x/2, getPosition().cpy().y+ ((float)Math.sin(shootAngle)*i) + getSize().y/2))) {
 					break;
 				}
 				Animation a = new Animation(new Sprite(AssetManager.getTexture("plot")));
