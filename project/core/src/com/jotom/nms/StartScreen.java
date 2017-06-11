@@ -20,7 +20,7 @@ public class StartScreen extends Scene {
 			if(delay > 1) if(controller.getButton(7)) Game.setCurrentScene(new GameScene());
 		}
 		
-		delay += 1*dt;
+		delay += 2*dt;
 		
 		if(Gdx.input.isKeyJustPressed(Keys.SPACE)) {
 			

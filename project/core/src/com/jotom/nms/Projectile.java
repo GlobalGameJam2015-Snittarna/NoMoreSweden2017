@@ -29,7 +29,7 @@ public class Projectile extends GameObject {
 		super(position, size, sprite);
 		setOriginCenter();
 		this.angle = angle;
-		this.startSpeed = startSpeed;
+		this.startSpeed = speed;
 		this.speed = speed;
 		
 		this.tag = tag;
