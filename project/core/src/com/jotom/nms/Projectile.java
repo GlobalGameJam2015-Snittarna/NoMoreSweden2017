@@ -63,8 +63,8 @@ public class Projectile extends GameObject {
 		if (c != null && !c.getType().isWalkable()) getScene().removeObject(this);
 		
 		if(type == Types.DEACCELERTING) {
-			speed = lerp(speed, 0, 5*dt);
-			if(speed <= 5) opacity = lerp(opacity, 0, 3*dt);
+			speed = lerp(speed, 0, 2*dt);
+			if(speed <= 5) opacity = lerp(opacity, 0, 4*dt);
 			getSprite().setColor(1,  1, 1, opacity);
 		}
 		

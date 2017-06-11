@@ -73,10 +73,6 @@ public class GameScene extends Scene {
 	public void update(float dt) {
 		getCamera().update(dt);
 		
-		if(Gdx.input.isKeyPressed(Keys.G)) {
-			addObject(new Explosion(new Vector2(0, 0)));
-		}
-		
 		for(int i = 0; i < scores.length; i++) {
 			if(scores[i] >= MAX_SCORE) {
 				gameOver = true;
@@ -126,7 +122,7 @@ public class GameScene extends Scene {
 			
 			if(nextRoundDelay > 64*4) {
 				dt = 1;
-				resetRound();
+				if(!gameOver) resetRound();
 				roundTime = 0;
 				nextRoundDelay = 0;
 				if(firstRound) firstRound = false;
@@ -169,7 +165,9 @@ public class GameScene extends Scene {
 	
 	public void drawUi(SpriteBatch uiBatch) {
 		if(gameOver) {
-			AssetManager.font.draw(uiBatch, "GAME OVER \nPlayer " + (winningPlayer+1) + " won!\nPRRESS SPACE TO RESTART", 0, 0);
+			AssetManager.font.getData().setScale(1.2f);
+			AssetManager.font.draw(uiBatch, "GAME OVER \nPlayer " + (winningPlayer+1) + " won!\nPRRESS SPACE TO RESTART", -100, 0);
+			AssetManager.font.getData().setScale(0.5f);
 		}
 		else {
 			for(int i = 0; i < scores.length; i++)
@@ -210,5 +208,9 @@ public class GameScene extends Scene {
 	
 	public void raiseScore(int index, int amount) {
 		scores[index] += amount;
+	}
+	
+	public boolean isGameOver() {
+		return gameOver;
 	}
 }

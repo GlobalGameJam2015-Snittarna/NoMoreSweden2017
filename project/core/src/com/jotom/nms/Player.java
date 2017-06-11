@@ -129,7 +129,8 @@ public class Player extends GameObject {
 			index++;
 		}
 		
-		if (roundOver) dt = 0;
+		// wowww jävla copy-cat
+		if (roundOver || ((GameScene) getScene()).isGameOver()) dt = 0;
 		
 		setRotation(shootAngle*57.2957795f);
 				
@@ -206,10 +207,12 @@ public class Player extends GameObject {
 					setRotation(shootAngle*57.2957795f);
 				}
 			} else {
-				if(!notMoving) movmentDirection = new Vector2(((float)Math.cos(moveAngle)*speed)*dt, ((float)Math.sin(moveAngle)*speed)*dt);
-				else movmentDirection = Vector2.Zero;
+				if(!roundOver && !((GameScene) getScene()).isGameOver()) {
+					if(!notMoving) movmentDirection = new Vector2(((float)Math.cos(moveAngle)*speed)*dt, ((float)Math.sin(moveAngle)*speed)*dt);
+					else movmentDirection = Vector2.Zero;
 				
-				if(!canNotAim) shootAngle = controllerShootAngle;
+					if(!canNotAim) shootAngle = controllerShootAngle;
+				}
 			}
 			
 			if(shootDelay > 0) 
@@ -228,12 +231,12 @@ public class Player extends GameObject {
 			
 			tryMove(movmentDirection.cpy());
 			
-			moveDirections.add(movmentDirection.cpy());
+			if(!roundOver && !((GameScene) getScene()).isGameOver()) moveDirections.add(movmentDirection.cpy());
 			currentMoveIndex += 1;
 			shootAngels.add(new Float(shootAngle));
 		}
 		
-		if(!isCurrentPlayer && !roundOver) {
+		if(!isCurrentPlayer && !roundOver && !((GameScene) getScene()).isGameOver()) {
 			if(!cantDoNextMove && currentMoveIndex != moveDirections.size()-1 && health > 0) {
 				doMove(currentMoveIndex, dt);
 				currentMoveIndex++;
@@ -307,7 +310,8 @@ public class Player extends GameObject {
 	}
 	
 	public void shoot() {
-		if (roundOver) return;
+		// fan e detta, men som en opperturnist brukar jag det
+		if (roundOver || ((GameScene) getScene()).isGameOver()) return;
 		
 		if(weapon == WeaponTypes.PISTOL) {
 			getScene().addObject(new Projectile(new Vector2(getPosition().cpy().x + getSize().x/2, getPosition().cpy().y + getSize().y/2), new Vector2(8, 8), new Animation(new Sprite(AssetManager.getTexture("bullet"))), shootAngle, 500, tag, isCurrentPlayer, Projectile.Types.BULLET));
