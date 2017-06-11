@@ -10,6 +10,7 @@ public class Projectile extends GameObject {
 	
 	private float speed;
 	private float angle;
+	private float startSpeed;
 	private float opacity;
 	
 	private int tag;
@@ -28,6 +29,7 @@ public class Projectile extends GameObject {
 		super(position, size, sprite);
 		setOriginCenter();
 		this.angle = angle;
+		this.startSpeed = startSpeed;
 		this.speed = speed;
 		
 		this.tag = tag;
@@ -64,7 +66,7 @@ public class Projectile extends GameObject {
 		
 		if(type == Types.DEACCELERTING) {
 			speed = lerp(speed, 0, 2*dt);
-			if(speed <= 5) opacity = lerp(opacity, 0, 4*dt);
+			if(speed <= 16) opacity = lerp(opacity, 0, 4*dt);
 			getSprite().setColor(1,  1, 1, opacity);
 		}
 		

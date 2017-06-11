@@ -166,10 +166,17 @@ public class GameScene extends Scene {
 		Game.setCurrentScene(new StartScreen());
 	}
 	
+	private float cosCount;
+	
 	public void drawUi(SpriteBatch uiBatch) {
 		if(gameOver) {
+			cosCount += 0.1f;
+			Animation gameOverSprite = new Animation(new Sprite(AssetManager.getTexture("gameover")));
+			gameOverSprite.setPosition(-176/2, 0);
+			gameOverSprite.setRotation((float)Math.cos(cosCount) * 2);
+			gameOverSprite.draw(uiBatch);
 			AssetManager.font.getData().setScale(1.2f);
-			AssetManager.font.draw(uiBatch, "GAME OVER \nPlayer " + (winningPlayer+1) + " won!\nPRRESS START TO RESTART", -100, 0);
+			AssetManager.font.draw(uiBatch, "Player " + (winningPlayer+1) + " won!\nPRRESS START TO RESTART", -100, 0);
 			AssetManager.font.getData().setScale(0.5f);
 		}
 		else {
@@ -180,7 +187,11 @@ public class GameScene extends Scene {
 			}
 			if (nextRoundDelay <= 0) AssetManager.font.draw(uiBatch, "TIME LEFT: " + (int)(MAX_ROUND_TIME - roundTime), -32+8, 0);
 			if(nextRoundDelay > 0 && nextRoundDelay < 100000) {
-				uiBatch.draw(new Sprite(AssetManager.getTexture("roundover")), -100, -50);
+				Animation roundOverSprite = new Animation(new Sprite(AssetManager.getTexture("roundover")));
+				cosCount += 0.1f;
+				roundOverSprite.setPosition(-100, -50);
+				roundOverSprite.setRotation((float)Math.cos(cosCount) * 5);
+				roundOverSprite.draw(uiBatch);
 			}
 			if((int)(MAX_ROUND_TIME - roundTime) <= MAX_ROUND_TIME/3) {
 				AssetManager.font.setColor(1, 1, 1, 1);

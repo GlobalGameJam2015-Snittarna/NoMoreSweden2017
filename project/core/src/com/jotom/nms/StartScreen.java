@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.Controllers;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class StartScreen extends Scene {
@@ -25,6 +26,13 @@ public class StartScreen extends Scene {
 			
 		}
 		super.update(dt);
+	}
+	
+	public void drawGame(SpriteBatch gameBatch) {
+		Animation background = new Animation(new Sprite(AssetManager.getTexture("cover")));
+		background.setPosition(-320, -240);
+		background.draw(gameBatch);
+		super.drawGame(gameBatch);
 	}
 	
 	public void drawUi(SpriteBatch uiBatch) {

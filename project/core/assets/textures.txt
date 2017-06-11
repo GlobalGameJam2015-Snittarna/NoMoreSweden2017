@@ -29,3 +29,5 @@ explosion2,67,166,32,32
 explosion3,100,166,32,32
 explosion4,133,166,32,32
 explosion5,166,166,32,32
+cover,0,600,640,480
+gameover,414,200,174,106
