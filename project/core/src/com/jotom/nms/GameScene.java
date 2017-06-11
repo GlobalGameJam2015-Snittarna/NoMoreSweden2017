@@ -206,6 +206,20 @@ public class GameScene extends Scene {
 		super.drawGame(batch);
 	}
 	
+	public boolean pointIsOnTile(Vector2 point) {
+		for(GameObject g : getObjects()) {
+			if(g instanceof Tile) {
+				if(!((Tile) g).getType().isWalkable()) {
+					if(new Rectangle(point.x, point.y, 1, 1).collision(g.getHitbox())) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+		
+	}
+	
 	public void raiseScore(int index, int amount) {
 		scores[index] += amount;
 	}

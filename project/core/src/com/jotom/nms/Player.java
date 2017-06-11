@@ -361,12 +361,15 @@ public class Player extends GameObject {
 		if(health > 0) {
 			int length = 32*5;
 			for(int i = 0; i < length; i++) {
+				if(((GameScene) getScene()).pointIsOnTile(new Vector2(getPosition().cpy().x + ((float)Math.cos(shootAngle)*i) + getSize().x/2, getPosition().cpy().y+ ((float)Math.sin(shootAngle)*i) + getSize().y/2))) {
+					break;
+				}
 				Animation a = new Animation(new Sprite(AssetManager.getTexture("plot")));
 				a.setSize(1, 1);
 				float t = (float)i;
 				a.setColor((tag == 0) ? 1 : 0, 0, (tag == 1) ? 1 : 0, 1 - (t/((float)length)));
 				a.setPosition(getPosition().cpy().x + ((float)Math.cos(shootAngle)*i) + getSize().x/2, getPosition().cpy().y+ ((float)Math.sin(shootAngle)*i) + getSize().y/2);
-			
+				
 				a.draw(batch);
 			}
 			
