@@ -212,6 +212,14 @@ public class Player extends GameObject {
 					else movmentDirection = Vector2.Zero;
 				
 					if(!canNotAim) shootAngle = controllerShootAngle;
+					
+					if(movmentDirection.equals(Vector2.Zero)) {
+						currentFrame = 0;
+						setSprite(new Animation(new Sprite(AssetManager.getTexture("player" + (tag+1) + "step" + currentFrame))));
+						setRotation(shootAngle*57.2957795f);
+					} else {
+						animationCount += 1*dt;
+					}
 				}
 			}
 			
@@ -250,6 +258,11 @@ public class Player extends GameObject {
 			setRotation(shootAngle*57.2957795f);
 			currentFrame++;
 			animationCount = 0;
+		}
+		
+		if(((GameScene) getScene()).isGameOver() || roundOver) {
+			speed = 0;
+			movmentDirection = Vector2.Zero;
 		}
 		
 		super.update(dt);
