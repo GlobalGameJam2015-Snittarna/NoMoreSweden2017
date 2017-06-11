@@ -316,11 +316,12 @@ public class Player extends GameObject {
 	public void giveRandomWeapon() {
 		int id = random.nextInt(4);
 		
+		if(id == 3 && random.nextBoolean()) weapon = WeaponTypes.ROCKET_LAUNCHER;
+		else weapon = WeaponTypes.PISTOL;
+		
 		if(id == 0) weapon = WeaponTypes.PISTOL;
 		if(id == 1) weapon = WeaponTypes.MACHINE_GUN;
 		if(id == 2) weapon = WeaponTypes.SPREADGUN;
-		if(id == 3 && random.nextBoolean()) weapon = WeaponTypes.ROCKET_LAUNCHER;
-		else weapon = WeaponTypes.PISTOL;
 	}
 	
 	public void shoot() {
