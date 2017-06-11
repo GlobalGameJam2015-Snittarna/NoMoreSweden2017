@@ -158,7 +158,7 @@ public class Player extends GameObject {
 						}
 						getScene().removeObject(g);
 						getScene().addObject(new BloodSplatter(getPosition()));
-						int np = 10;
+						int np = 100;
 						for (int i = 0; i < np; i++) {
 							float angle = i *360 / np + random.nextFloat() * 10;
 							getScene().addObject(new Particle(getPosition(), new Vector2((float)Math.cos(angle), (float)Math.sin(angle)).scl(50 + random.nextFloat() * 100), Color.RED));
