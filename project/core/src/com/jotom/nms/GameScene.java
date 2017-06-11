@@ -81,6 +81,9 @@ public class GameScene extends Scene {
 		}
 
 		if(gameOver) {
+			for (Controller controller : Controllers.getControllers()) {
+				if(controller.getButton(7)) resetGame();
+			}
 			if(Gdx.input.isKeyJustPressed(Keys.SPACE)) {
 				resetGame();
 			}
@@ -166,7 +169,7 @@ public class GameScene extends Scene {
 	public void drawUi(SpriteBatch uiBatch) {
 		if(gameOver) {
 			AssetManager.font.getData().setScale(1.2f);
-			AssetManager.font.draw(uiBatch, "GAME OVER \nPlayer " + (winningPlayer+1) + " won!\nPRRESS SPACE TO RESTART", -100, 0);
+			AssetManager.font.draw(uiBatch, "GAME OVER \nPlayer " + (winningPlayer+1) + " won!\nPRRESS START TO RESTART", -100, 0);
 			AssetManager.font.getData().setScale(0.5f);
 		}
 		else {

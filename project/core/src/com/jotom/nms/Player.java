@@ -361,6 +361,7 @@ public class Player extends GameObject {
 		if(health > 0) {
 			int length = 32*5;
 			for(int i = 0; i < length; i++) {
+				//förmodligen ingen som kommer märka men så kan det gå
 				if(((GameScene) getScene()).pointIsOnTile(new Vector2(getPosition().cpy().x + ((float)Math.cos(shootAngle)*i) + getSize().x/2, getPosition().cpy().y+ ((float)Math.sin(shootAngle)*i) + getSize().y/2))) {
 					break;
 				}
