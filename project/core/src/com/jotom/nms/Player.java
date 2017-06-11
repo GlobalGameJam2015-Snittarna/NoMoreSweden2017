@@ -103,15 +103,15 @@ public class Player extends GameObject {
 	}
 	
 	public void update(float dt) {
-		int index = 0;
+		int index = 1;
 		for (Controller controller : Controllers.getControllers()) {
 			if(tag == index) {
 				float axisValueX = controller.getAxis(1);
 				float axisValueY = controller.getAxis(0);
 				
-				if(axisValueX < 0.1f && axisValueX > -0.1f) axisValueX = 0;
-				if(axisValueY < 0.1f && axisValueY > -0.1f) axisValueY = 0;
-				
+				if(axisValueX < 0.15f && axisValueX > -0.15f) axisValueX = 0;
+				if(axisValueY < 0.15f && axisValueY > -0.15f) axisValueY = 0;
+
 				notMoving = axisValueX == 0 && axisValueY == 0;
 				
 				moveAngle = (float)Math.atan2(-axisValueY, axisValueX);
@@ -126,7 +126,7 @@ public class Player extends GameObject {
 				
 				controllerShootAngle = (float)Math.atan2(-axisValueRightY, axisValueRightX);
 			}
-			index++;
+			index--;
 		}
 		
 		// wowww jävla copy-cat
@@ -189,7 +189,7 @@ public class Player extends GameObject {
 			}
 			
 			// NÅGON GLÖMMDE VISST EN LINTE CONTROLL(ÄR DET DEN ONDE RUBEN MÅN TRO)
-			if(tag == 1) {
+			if(tag == 3) {
 				if(Gdx.input.isKeyPressed(upKey)) {
 					movmentDirection = new Vector2(((float)Math.cos(shootAngle)*speed)*dt, ((float)Math.sin(shootAngle)*speed)*dt);
 					animationCount += 1*dt;
@@ -229,7 +229,7 @@ public class Player extends GameObject {
 				shootDelay = 0;
 			}
 			
-			if((Gdx.input.isKeyPressed(shootKey) || (!canNotAim && tag == 0)) && shootDelay == 0) {
+			if((Gdx.input.isKeyPressed(shootKey) || !canNotAim) && shootDelay == 0) {
 				shoot();
 				shootDelay = 1;
 				moves.add(Move.SHOOT);
@@ -319,7 +319,8 @@ public class Player extends GameObject {
 		if(id == 0) weapon = WeaponTypes.PISTOL;
 		if(id == 1) weapon = WeaponTypes.MACHINE_GUN;
 		if(id == 2) weapon = WeaponTypes.SPREADGUN;
-		if(id == 3) weapon = WeaponTypes.ROCKET_LAUNCHER;
+		if(id == 3 && random.nextBoolean()) weapon = WeaponTypes.ROCKET_LAUNCHER;
+		else weapon = WeaponTypes.PISTOL;
 	}
 	
 	public void shoot() {
